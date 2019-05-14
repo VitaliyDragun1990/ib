@@ -1,9 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.revenat</groupId>
-    <artifactId>iblog</artifactId>
-    <version>1.0.0</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.revenat</groupId>
+	<artifactId>iblog</artifactId>
+	<version>1.0.0</version>
 	<packaging>war</packaging>
 
 	<properties>
@@ -15,6 +16,7 @@
 		<jstl.version>1.2</jstl.version>
 		<commons-lang3.version>3.8.1</commons-lang3.version>
 		<commons-dbcp2.version>2.6.0</commons-dbcp2.version>
+		<commons-io.version>2.6</commons-io.version>
 		<postgresql.version>42.2.5</postgresql.version>
 		<json.version>20180813</json.version>
 		<restfb.version>2.20.0</restfb.version>
@@ -49,6 +51,12 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons-lang3.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -128,7 +136,7 @@
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
 			<scope>test</scope>
-		</dependency>	
+		</dependency>
 	</dependencies>
 
 	<build>
