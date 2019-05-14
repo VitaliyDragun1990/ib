@@ -5,6 +5,7 @@ public final class Constants {
 
 	public static class Attribute {
 		public static final String CURRENT_PAGE = "currentPage";
+		public static final String STATUS_CODE = "statusCode";
 
 		private Attribute() {
 		}
@@ -45,6 +46,7 @@ public final class Constants {
 		public static final String CONTACT = "/contact";
 		public static final String ABOUT = "/about";
 		public static final String SEARCH = "/search";
+		public static final String ERROR = "/error";
 
 		private URL() {
 		}

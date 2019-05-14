@@ -3,6 +3,8 @@ package com.revenat.iblog.presentation.infra.config;
 import java.util.EnumSet;
 import java.util.Set;
 
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContainerInitializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -13,8 +15,10 @@ import com.revenat.iblog.application.service.ServiceManager;
 import com.revenat.iblog.presentation.controller.page.AboutController;
 import com.revenat.iblog.presentation.controller.page.ArticleController;
 import com.revenat.iblog.presentation.controller.page.ContactController;
+import com.revenat.iblog.presentation.controller.page.ErrorController;
 import com.revenat.iblog.presentation.controller.page.NewsController;
 import com.revenat.iblog.presentation.controller.page.SearchController;
+import com.revenat.iblog.presentation.filter.ErrorHandlerFilter;
 import com.revenat.iblog.presentation.infra.config.Constants.URL;
 import com.revenat.iblog.presentation.listener.ApplicationListener;
 
@@ -46,6 +50,15 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		
 		servletReg = ctx.addServlet("SearchController", new SearchController());
 		servletReg.addMapping(URL.SEARCH);
+		
+		servletReg = ctx.addServlet("ErrorController", new ErrorController());
+		servletReg.addMapping(URL.ERROR);
+		
+		FilterRegistration.Dynamic filterReg = ctx.addFilter("ErrorHandlerFilter", new ErrorHandlerFilter());
+		filterReg.addMappingForUrlPatterns(
+				EnumSet.of(DispatcherType.REQUEST),
+				false,
+				"/*");
 		
 		ctx.addListener(new ApplicationListener(serviceManager));
 	}

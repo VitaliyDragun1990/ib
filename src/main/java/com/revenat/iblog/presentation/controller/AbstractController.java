@@ -23,4 +23,8 @@ public class AbstractController extends HttpServlet {
 	public final void forwardToFragment(String jspFragment, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RoutingUtils.forwardToFragment(jspFragment, req, resp);
 	}
+	
+	public final void redirect(String url, HttpServletResponse resp) throws IOException {
+		RoutingUtils.redirect(url, resp);
+	}
 }
