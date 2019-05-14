@@ -4,6 +4,7 @@ public final class Constants {
 	public static final int SESSION_MAX_INACTIVE_INTERVAL = 30 * 60;
 
 	public static class Attribute {
+		public static final String CURRENT_PAGE = "currentPage";
 
 		private Attribute() {
 		}
@@ -19,6 +20,9 @@ public final class Constants {
 	}
 
 	public static class Page {
+		public static final String TEMPLATE = "page-template.jsp";
+		public static final String ERROR = "error.jsp";
+		public static final String NEWS = "news.jsp";
 
 		private Page() {
 		}
@@ -31,6 +35,8 @@ public final class Constants {
 	}
 
 	public static class URL {
+		public static final String NEWS = "/news";
+		public static final String NEWS_BY_CATEGORY = "/news/*";
 
 		private URL() {
 		}
