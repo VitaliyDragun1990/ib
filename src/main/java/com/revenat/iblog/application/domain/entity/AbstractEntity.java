@@ -32,9 +32,4 @@ public abstract class AbstractEntity<T> implements Serializable {
 		AbstractEntity<?> other = (AbstractEntity<?>) obj;
 		return Objects.equals(id, other.id);
 	}
-
-	@Override
-	public String toString() {
-		return String.format("%s [id=%s]", getClass().getSimpleName(), id);
-	}
 }

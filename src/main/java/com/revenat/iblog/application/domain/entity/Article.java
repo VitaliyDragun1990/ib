@@ -1,9 +1,6 @@
 package com.revenat.iblog.application.domain.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Article extends AbstractEntity<Long> {
 	private static final long serialVersionUID = 2150459541573382060L;
@@ -13,19 +10,32 @@ public class Article extends AbstractEntity<Long> {
 	private String logo;
 	private String description;
 	private String content;
-	private Category category;
+	private int categoryId;
 	private LocalDateTime created;
 	private long numberOfViews;
-	private List<Comment> comments;
+	private int numberOfComments;
 	
 	public Article() {
 		created = LocalDateTime.now();
-		comments = new ArrayList<>();
 	}
 	
 	public String getTitle() {
 		return title;
 	}
+	
+	public String getShortTitle() {
+		if (title != null && title.length() > 20) {
+			return title.subSequence(0, 17) + "...";
+		} else {
+			return title;
+		}
+	}
+	
+	// TODO: remove this presentation-related method from domain entity
+	public String getArticleLink() {
+		return "/article/" + getId() + url;
+	}
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -53,11 +63,11 @@ public class Article extends AbstractEntity<Long> {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Category getCategory() {
-		return category;
+	public int getCategoryId() {
+		return categoryId;
 	}
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 	public LocalDateTime getCreated() {
 		return created;
@@ -71,24 +81,10 @@ public class Article extends AbstractEntity<Long> {
 	public void setNumberOfViews(long numberOfViews) {
 		this.numberOfViews = numberOfViews;
 	}
-	public List<Comment> getComments() {
-		return Collections.unmodifiableList(comments);
+	public int getNumberOfComments() {
+		return numberOfComments;
 	}
-	public void setComments(List<Comment> comments) {
-		this.comments = new ArrayList<>();
-		this.comments.addAll(comments);
+	public void setNumberOfComments(int numberOfComments) {
+		this.numberOfComments = numberOfComments;
 	}
-	
-	public void addComment(Comment comment) {
-		comments.add(comment);
-	}
-
-	@Override
-	public String toString() {
-		return String.format(
-				"Article [id=%s, title=%s, url=%s, logo=%s, description=%s, content=%s, category=%s, created=%s, numberOfViews=%s, comments=%s]",
-				getId(), title, url, logo, description, content, category, created, numberOfViews, comments);
-	}
-	
-	
 }

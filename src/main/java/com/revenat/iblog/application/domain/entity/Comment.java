@@ -17,6 +17,13 @@ public class Comment extends AbstractEntity<Long> {
 	public Comment() {
 		created = LocalDateTime.now();
 	}
+	
+	public Comment(long articleId, Account account, String content, LocalDateTime created) {
+		this.articleId = articleId;
+		this.account = account;
+		this.content = content;
+		this.created = created;
+	}
 
 	public Account getAccount() {
 		return account;
@@ -49,13 +56,4 @@ public class Comment extends AbstractEntity<Long> {
 	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
-
-	@Override
-	public String toString() {
-		return String.format("Comment [id=%s, accountId=%s, articleId=%s, content=%s, created=%s]",
-				getId(), account.getId(), articleId, content,
-				created);
-	}
-	
-	
 }
