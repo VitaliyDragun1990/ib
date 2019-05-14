@@ -27,7 +27,7 @@
   <div class="container">
     <nav class="hidden-print">
     	<ol class="breadcrumb">
-    		<li><a href="news.html">News</a></li>
+    		<li><a href='<c:url value="/news" />'>News</a></li>
     		<li class="active">Bibendum</li>
     	</ol>
     </nav>

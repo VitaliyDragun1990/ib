@@ -1,14 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="container">
 	<div class="row">
 		<div class="col-md-6 col-lg-5 center-sm">
   			<h2><i class="fa fa-html5" aria-hidden="true"></i> Blog demo for &lt;/&gt;DevStudy.net</h2>
   			<nav>
-  				<a href="news.html" class="link">News</a>
+  				<a href='<c:url value="/news" />' class="link">News</a>
   				<a id="search-link" href="#" class="link">Search</a>
-  				<a href="about.html" class="link">About</a>
-  				<a href="contacts.html" class="link">Contacts</a>
+  				<a href='<c:url value="/about" />' class="link">About</a>
+  				<a href='<c:url value="/contact" />' class="link">Contacts</a>
   			</nav>
   			<p class="copywrite">Copywrite &copy; 2019 - &lt;/&gt;DevStudy.net All rights reserved.</p>
   		</div>

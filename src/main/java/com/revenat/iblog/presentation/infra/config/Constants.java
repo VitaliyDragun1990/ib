@@ -23,6 +23,10 @@ public final class Constants {
 		public static final String TEMPLATE = "page-template.jsp";
 		public static final String ERROR = "error.jsp";
 		public static final String NEWS = "news.jsp";
+		public static final String ARTILCE = "article.jsp";
+		public static final String CONTACT = "contact.jsp";
+		public static final String ABOUT = "about.jsp";
+		public static final String SEARCH = "search.jsp";
 
 		private Page() {
 		}
@@ -37,6 +41,10 @@ public final class Constants {
 	public static class URL {
 		public static final String NEWS = "/news";
 		public static final String NEWS_BY_CATEGORY = "/news/*";
+		public static final String ARTICLE = "/article";
+		public static final String CONTACT = "/contact";
+		public static final String ABOUT = "/about";
+		public static final String SEARCH = "/search";
 
 		private URL() {
 		}
