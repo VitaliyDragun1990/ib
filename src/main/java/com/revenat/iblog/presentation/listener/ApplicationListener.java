@@ -2,14 +2,20 @@ package com.revenat.iblog.presentation.listener;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebListener
+import com.revenat.iblog.application.service.ServiceManager;
+
 public class ApplicationListener implements ServletContextListener {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationListener.class);
+	
+	private final ServiceManager serviceManager;
+	
+	public ApplicationListener(ServiceManager serviceManager) {
+		this.serviceManager = serviceManager;
+	}
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
@@ -18,6 +24,7 @@ public class ApplicationListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
+		serviceManager.close();
 		LOGGER.info("Application stopped");
 	}
 

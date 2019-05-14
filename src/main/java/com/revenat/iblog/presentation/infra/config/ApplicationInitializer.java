@@ -9,12 +9,14 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 import javax.servlet.SessionTrackingMode;
 
+import com.revenat.iblog.application.service.ServiceManager;
 import com.revenat.iblog.presentation.controller.page.AboutController;
 import com.revenat.iblog.presentation.controller.page.ArticleController;
 import com.revenat.iblog.presentation.controller.page.ContactController;
 import com.revenat.iblog.presentation.controller.page.NewsController;
 import com.revenat.iblog.presentation.controller.page.SearchController;
 import com.revenat.iblog.presentation.infra.config.Constants.URL;
+import com.revenat.iblog.presentation.listener.ApplicationListener;
 
 /**
  * This component creates and configures all servlets, filters, listeners on
@@ -28,6 +30,7 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 	@Override
 	public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
 		ctx.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
+		ServiceManager serviceManager = ServiceManager.getInstance();
 		
 		Dynamic servletReg = ctx.addServlet("NewsController", new NewsController());
 		servletReg.addMapping(URL.NEWS, URL.NEWS_BY_CATEGORY);
@@ -43,5 +46,7 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		
 		servletReg = ctx.addServlet("SearchController", new SearchController());
 		servletReg.addMapping(URL.SEARCH);
+		
+		ctx.addListener(new ApplicationListener(serviceManager));
 	}
 }
