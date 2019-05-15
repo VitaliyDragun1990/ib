@@ -7,4 +7,6 @@ import com.revenat.iblog.application.domain.entity.Category;
 public interface CategoryRepository {
 
 	List<Category> getAll();
+	
+	Category getByUrl(String url);
 }

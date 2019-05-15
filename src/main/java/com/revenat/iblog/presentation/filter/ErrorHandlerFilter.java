@@ -42,6 +42,7 @@ public class ErrorHandlerFilter extends AbstractFilter {
 		if (statusCode != HttpServletResponse.SC_BAD_REQUEST) {
 			LOGGER.error("Request {} failed: {}", requestUri, e.getMessage(), e);
 		} else {
+			req.setAttribute(Attribute.ERROR_MESSAGE, e.getMessage());
 			LOGGER.warn("Bad request {}: {}", requestUri, e.getMessage(), e);
 		}
 		req.setAttribute(Attribute.STATUS_CODE, statusCode);

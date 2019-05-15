@@ -1,9 +1,11 @@
 package com.revenat.iblog.persistence.repository.jdbc;
 
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revenat.iblog.application.domain.entity.Article;
 import com.revenat.iblog.application.domain.entity.Category;
 import com.revenat.iblog.persistence.infra.util.JDBCUtils.ResultSetHandler;
 
@@ -25,10 +27,44 @@ final class MapperFactory {
 		return c;
 	};
 	
+	private static final ResultSetHandler<Article> ARTICLE_HANDLER = rs -> {
+		Article a = new Article();
+		a.setId(rs.getLong("id"));
+		a.setTitle(rs.getString("title"));
+		a.setUrl(rs.getString("url"));
+		a.setLogo(rs.getString("logo"));
+		a.setDescription(rs.getString("desc"));
+		a.setContent(rs.getString("content"));
+		a.setCategoryId(rs.getInt("category_id"));
+		a.setCreated(rs.getObject("created", LocalDateTime.class));
+		a.setNumberOfViews(rs.getLong("views"));
+		a.setNumberOfComments(rs.getInt("comments"));
+		return a;
+	};
+	
+	public static final ResultSetHandler<Long> COUNT_RESULT_SET_HANDLER = rs -> {
+		if (rs.next()) {
+			return rs.getLong("count");
+		} else {
+			return 0L;
+		}
+	};
+	
 	public static ResultSetHandler<List<Category>> getCategoriesMapper() {
 		return getMultipleRowsMapper(CATEGORY_HANDLER);
 	}
+	
+	public static ResultSetHandler<Category> getCategoryMapper() {
+		return getSingleRowMapper(CATEGORY_HANDLER);
+	}
 
+	public static ResultSetHandler<List<Article>> getArticlesMapper() {
+		return getMultipleRowsMapper(ARTICLE_HANDLER);
+	}
+	
+	public static ResultSetHandler<Long> getCountMapper() {
+		return COUNT_RESULT_SET_HANDLER;
+	}
 	
 	/**
 	 * Returns {@link ResultSetHandler} implementation that capable of tarnsforming

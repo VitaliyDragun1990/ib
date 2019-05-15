@@ -7,6 +7,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revenat.iblog.persistence.repository.CategoryRepository;
 import com.revenat.iblog.persistence.repository.RepositoryFactory;
 
 public class ServiceManager {
@@ -17,9 +18,14 @@ public class ServiceManager {
 	private final Properties applicationProperties;
 	private final BasicDataSource dataSource;
 	private final CategoryService categoryService;
+	private final ArticleService articleService;
 	
 	public CategoryService getCategoryService() {
 		return categoryService;
+	}
+	
+	public ArticleService getArticleService() {
+		return articleService;
 	}
 	
 	public static synchronized ServiceManager getInstance() {
@@ -52,7 +58,9 @@ public class ServiceManager {
 				getApplicationProperty("db.pool.initSize"),
 				getApplicationProperty("db.pool.maxSize"));
 		RepositoryFactory repoFactory = new RepositoryFactory(dataSource);
-		categoryService = new CategoryService(repoFactory.createCategoryRepository());
+		CategoryRepository categoryRepository = repoFactory.createCategoryRepository();
+		categoryService = new CategoryService(categoryRepository);
+		articleService = new ArticleService(repoFactory.createArticleRepository(), categoryRepository);
 		
 		LOGGER.info("ServiceManager instance created");
 	}

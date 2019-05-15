@@ -23,19 +23,6 @@ public class Article extends AbstractEntity<Long> {
 		return title;
 	}
 	
-	public String getShortTitle() {
-		if (title != null && title.length() > 20) {
-			return title.subSequence(0, 17) + "...";
-		} else {
-			return title;
-		}
-	}
-	
-	// TODO: remove this presentation-related method from domain entity
-	public String getArticleLink() {
-		return "/article/" + getId() + url;
-	}
-	
 	public void setTitle(String title) {
 		this.title = title;
 	}

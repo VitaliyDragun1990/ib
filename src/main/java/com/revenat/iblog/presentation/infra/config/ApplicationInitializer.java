@@ -16,6 +16,7 @@ import com.revenat.iblog.presentation.controller.page.AboutController;
 import com.revenat.iblog.presentation.controller.page.ArticleController;
 import com.revenat.iblog.presentation.controller.page.ContactController;
 import com.revenat.iblog.presentation.controller.page.ErrorController;
+import com.revenat.iblog.presentation.controller.page.NewsByCategoryController;
 import com.revenat.iblog.presentation.controller.page.NewsController;
 import com.revenat.iblog.presentation.controller.page.SearchController;
 import com.revenat.iblog.presentation.filter.ErrorHandlerFilter;
@@ -36,11 +37,15 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		ctx.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
 		ServiceManager serviceManager = ServiceManager.getInstance();
 		
-		Dynamic servletReg = ctx.addServlet("NewsController", new NewsController());
-		servletReg.addMapping(URL.NEWS, URL.NEWS_BY_CATEGORY);
+		Dynamic servletReg = ctx.addServlet("NewsController", new NewsController(serviceManager.getArticleService()));
+		servletReg.addMapping(URL.NEWS);
+		
+		servletReg = ctx.addServlet("NewsByCategoryController", new NewsByCategoryController(serviceManager.getArticleService()));
+		servletReg.addMapping(URL.NEWS_BY_CATEGORY);
 		
 		servletReg = ctx.addServlet("ArtilceController", new ArticleController());
 		servletReg.addMapping(URL.ARTICLE);
+		
 		
 		servletReg = ctx.addServlet("ContactController", new ContactController());
 		servletReg.addMapping(URL.CONTACT);

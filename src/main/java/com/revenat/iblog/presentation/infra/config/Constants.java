@@ -2,12 +2,15 @@ package com.revenat.iblog.presentation.infra.config;
 
 public final class Constants {
 	public static final int SESSION_MAX_INACTIVE_INTERVAL = 30 * 60;
+	public static final int ATRILCES_PER_PAGE = 10;
 
 	public static class Attribute {
 		public static final String CURRENT_PAGE = "currentPage";
 		public static final String STATUS_CODE = "statusCode";
+		public static final String ERROR_MESSAGE = "errorMessage";
 		public static final String CATEGORY_MAP = "CATEGORY_MAP";
 		public static final String SELECTED_CATEGORY_URL = "selectedCategoryUrl";
+		public static final String ARTICLES = "articles";
 
 		private Attribute() {
 		}
