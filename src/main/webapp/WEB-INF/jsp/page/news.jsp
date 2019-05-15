@@ -4,7 +4,7 @@
 <!-- Article entry  -->
 <article class="panel panel-default">
 	<div class="thumbnail">
-		<a href='<c:url value="/article" />'> <img src="media/01f94926-6174-4dd3-8830-eb4ca08b0404.jpg" alt="article title image">
+		<a href='<c:url value="/article" />'> <img src="/media/01f94926-6174-4dd3-8830-eb4ca08b0404.jpg" alt="article title image">
 		</a>
 	</div>
 	<div class="panel-body">
@@ -28,7 +28,7 @@
 <!-- Article entry  -->
 <article class="panel panel-default">
 	<div class="thumbnail">
-		<a href='<c:url value="/article" />'> <img src="media/01f94926-6174-4dd3-8830-eb4ca08b0404.jpg" alt="article title image">
+		<a href='<c:url value="/article" />'> <img src="/media/01f94926-6174-4dd3-8830-eb4ca08b0404.jpg" alt="article title image">
 		</a>
 	</div>
 	<div class="panel-body">

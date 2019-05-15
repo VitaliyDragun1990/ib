@@ -6,6 +6,8 @@ public final class Constants {
 	public static class Attribute {
 		public static final String CURRENT_PAGE = "currentPage";
 		public static final String STATUS_CODE = "statusCode";
+		public static final String CATEGORY_MAP = "CATEGORY_MAP";
+		public static final String SELECTED_CATEGORY_URL = "selectedCategoryUrl";
 
 		private Attribute() {
 		}

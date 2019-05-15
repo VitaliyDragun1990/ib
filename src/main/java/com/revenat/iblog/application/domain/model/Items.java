@@ -2,7 +2,9 @@ package com.revenat.iblog.application.domain.model;
 
 import java.util.List;
 
-public class Items<T> extends AbstractModel {
+import com.revenat.iblog.application.domain.entity.AbstractEntity;
+
+public class Items<T extends AbstractEntity<?>> extends AbstractModel {
 	private List<T> items;
 	private int count;
 	

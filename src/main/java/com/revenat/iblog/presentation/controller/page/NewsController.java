@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.revenat.iblog.presentation.controller.AbstractController;
+import com.revenat.iblog.presentation.infra.config.Constants.Attribute;
 import com.revenat.iblog.presentation.infra.config.Constants.Page;
 
 public class NewsController extends AbstractController {
@@ -14,6 +15,14 @@ public class NewsController extends AbstractController {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String categoryUrl = getSelectedCategoryUrl(req);
+		req.setAttribute(Attribute.SELECTED_CATEGORY_URL, categoryUrl);
 		forwardToPage(Page.NEWS, req, resp);
+	}
+
+	private String getSelectedCategoryUrl(HttpServletRequest req) {
+		String requestURI = req.getRequestURI();
+		int startIdx = requestURI.lastIndexOf('/');
+		return requestURI.substring(startIdx, requestURI.length());
 	}
 }

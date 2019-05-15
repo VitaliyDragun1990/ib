@@ -7,12 +7,11 @@
 <div id="categories" class="panel panel-default collapse" data-spy="affix" data-offset-top="60" data-offset-bottom="400">
 	<div class="panel-heading hidden-sm hidden-xs">Categories</div>
 	<div class="list-group">
-		<a href='<c:url value="/news"  />' class="list-group-item"> <span class="badge">78</span> Vehicula</a>
-		<a href='<c:url value="/news"  />' class="list-group-item"> <span class="badge">75</span> Ornare</a>
-    	<a href='<c:url value="/news"  />' class="list-group-item"> <span class="badge">110</span> Blandit</a>
-    	<a href='<c:url value="/news"  />' class="list-group-item"> <span class="badge">113</span> Lacinia</a>
-    	<a href='<c:url value="/news"  />' class="list-group-item"> <span class="badge">216</span> Dictumst</a>
-    	<a href='<c:url value="/news"  />' class="list-group-item"> <span class="badge">95</span> Tempus</a>
-    	<a href='<c:url value="/news"  />' class="list-group-item"> <span class="badge">211</span> Feugiat</a>
+		<c:forEach var="entry" items="${CATEGORY_MAP}">
+			<c:set scope="page" var="c" value="${entry.value}"/>
+			<a href='<c:url value="/news${c.url}" />' class="list-group-item ${selectedCategoryUrl == c.url ? 'active' : ''}">
+				<span class="badge">${c.numberOfArticles}</span> ${c.name}
+			</a>
+		</c:forEach>
 	</div>
 </div>

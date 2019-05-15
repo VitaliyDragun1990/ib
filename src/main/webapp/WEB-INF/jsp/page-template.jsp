@@ -11,10 +11,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blog layout demo</title>
-<link href='<c:url value="static/css/bootstrap.css" />' rel="stylesheet">
-<link href='<c:url value="static/css/bootstrap-theme.css" />' rel="stylesheet">
-<link href='<c:url value="static/css/font-awesome.css" />' rel="stylesheet">
-<link href='<c:url value="static/css/app.css" />' rel="stylesheet">
+<link href='<c:url value="/static/css/bootstrap.css" />' rel="stylesheet">
+<link href='<c:url value="/static/css/bootstrap-theme.css" />' rel="stylesheet">
+<link href='<c:url value="/static/css/font-awesome.css" />' rel="stylesheet">
+<link href='<c:url value="/static/css/app.css" />' rel="stylesheet">
 </head>
 
 <body>
@@ -47,9 +47,9 @@
 	<script>
 		var ctx = "${pageContext.request.contextPath}"
 	</script>
-	<script src='<c:url value="static/js/jquery-3.3.1.min.js" />'></script>
-	<script src='<c:url value="static/js/bootstrap.js" />'></script>
-	<script src='<c:url value="static/js/app.js" />'></script>
+	<script src='<c:url value="/static/js/jquery-3.3.1.min.js" />'></script>
+	<script src='<c:url value="/static/js/bootstrap.js" />'></script>
+	<script src='<c:url value="/static/js/app.js" />'></script>
 </body>
 
 </html>

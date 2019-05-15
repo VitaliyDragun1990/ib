@@ -60,6 +60,6 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 				false,
 				"/*");
 		
-		ctx.addListener(new ApplicationListener(serviceManager));
+		ctx.addListener(new ApplicationListener(serviceManager, serviceManager.getCategoryService()));
 	}
 }
