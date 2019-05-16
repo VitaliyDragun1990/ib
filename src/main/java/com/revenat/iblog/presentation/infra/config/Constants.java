@@ -2,7 +2,8 @@ package com.revenat.iblog.presentation.infra.config;
 
 public final class Constants {
 	public static final int SESSION_MAX_INACTIVE_INTERVAL = 30 * 60;
-	public static final int ATRILCES_PER_PAGE = 10;
+	public static final int ITEMS_PER_PAGE = 10;
+	public static final int MAX_PAGINATION_BUTTONS_PER_PAGE = 9;
 
 	public static class Attribute {
 		public static final String CURRENT_PAGE = "currentPage";
@@ -13,6 +14,7 @@ public final class Constants {
 		public static final String ARTICLES = "articles";
 		public static final String SEARCH_QUERY = "searchQuery";
 		public static final String ARTICLE_COUNT = "articleCount";
+		public static final String PAGINATION = "pagination";
 
 		private Attribute() {
 		}

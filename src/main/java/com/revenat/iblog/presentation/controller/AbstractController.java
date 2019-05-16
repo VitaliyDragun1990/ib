@@ -16,15 +16,28 @@ public class AbstractController extends HttpServlet {
 	private static final long serialVersionUID = -7537501462129325213L;
 	protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
-	public final void forwardToPage(String jspPage, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected final void forwardToPage(String jspPage, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RoutingUtils.forwardToPage(jspPage, req, resp);
 	}
 	
-	public final void forwardToFragment(String jspFragment, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected final void forwardToFragment(String jspFragment, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RoutingUtils.forwardToFragment(jspFragment, req, resp);
 	}
 	
-	public final void redirect(String url, HttpServletResponse resp) throws IOException {
+	protected final void redirect(String url, HttpServletResponse resp) throws IOException {
 		RoutingUtils.redirect(url, resp);
+	}
+	
+	protected final int getPageNumber(HttpServletRequest req) {
+		String page = req.getParameter("page");
+		try {
+			return Integer.parseInt(page);
+		} catch (NumberFormatException e) {
+			return 1;
+		}
+	}
+	
+	protected int calculateOffset(int pageNumber, int pageSize) {
+		return (pageNumber - 1) * pageSize;
 	}
 }
