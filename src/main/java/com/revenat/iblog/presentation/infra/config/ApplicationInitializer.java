@@ -19,6 +19,7 @@ import com.revenat.iblog.presentation.controller.page.ErrorController;
 import com.revenat.iblog.presentation.controller.page.NewsByCategoryController;
 import com.revenat.iblog.presentation.controller.page.NewsController;
 import com.revenat.iblog.presentation.controller.page.SearchController;
+import com.revenat.iblog.presentation.filter.CategoriesLoaderFilter;
 import com.revenat.iblog.presentation.filter.ErrorHandlerFilter;
 import com.revenat.iblog.presentation.infra.config.Constants.URL;
 import com.revenat.iblog.presentation.listener.ApplicationListener;
@@ -53,7 +54,7 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		servletReg = ctx.addServlet("AboutController", new AboutController());
 		servletReg.addMapping(URL.ABOUT);
 		
-		servletReg = ctx.addServlet("SearchController", new SearchController());
+		servletReg = ctx.addServlet("SearchController", new SearchController(serviceManager.getArticleService()));
 		servletReg.addMapping(URL.SEARCH);
 		
 		servletReg = ctx.addServlet("ErrorController", new ErrorController());
@@ -63,6 +64,12 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		filterReg.addMappingForUrlPatterns(
 				EnumSet.of(DispatcherType.REQUEST),
 				false,
+				"/*");
+		
+		filterReg = ctx.addFilter("CategoriesLoaderFilter", new CategoriesLoaderFilter(serviceManager.getCategoryService()));
+		filterReg.addMappingForUrlPatterns(
+				EnumSet.of(DispatcherType.REQUEST),
+				true,
 				"/*");
 		
 		ctx.addListener(new ApplicationListener(serviceManager, serviceManager.getCategoryService()));

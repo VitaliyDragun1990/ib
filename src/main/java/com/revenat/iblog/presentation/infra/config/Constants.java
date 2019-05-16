@@ -11,6 +11,8 @@ public final class Constants {
 		public static final String CATEGORY_MAP = "CATEGORY_MAP";
 		public static final String SELECTED_CATEGORY_URL = "selectedCategoryUrl";
 		public static final String ARTICLES = "articles";
+		public static final String SEARCH_QUERY = "searchQuery";
+		public static final String ARTICLE_COUNT = "articleCount";
 
 		private Attribute() {
 		}

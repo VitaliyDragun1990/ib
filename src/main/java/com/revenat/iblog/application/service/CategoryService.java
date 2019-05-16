@@ -14,8 +14,13 @@ public class CategoryService {
 		this.categoryRepo = categoryRepo;
 	}
 
-	public Map<Integer, Category> getAllCategories() {
+	public Map<Integer, Category> getCategoriesWithTotalArticleCount() {
 		List<Category> categories = categoryRepo.getAll();
+		return transform(categories);
+	}
+	
+	public Map<Integer, Category> getCategoriesWithMatchedArticleCount(String searchQuery) {
+		List<Category> categories = categoryRepo.getByArticleSearchQuery(searchQuery);
 		return transform(categories);
 	}
 

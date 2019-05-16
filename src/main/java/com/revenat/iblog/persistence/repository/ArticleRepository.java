@@ -3,6 +3,7 @@ package com.revenat.iblog.persistence.repository;
 import java.util.List;
 
 import com.revenat.iblog.application.domain.entity.Article;
+import com.revenat.iblog.application.domain.search.criteria.ArticleCriteria;
 
 public interface ArticleRepository {
 
@@ -13,4 +14,8 @@ public interface ArticleRepository {
 	long getTotalCount();
 	
 	long getCountByCategory(int categoryId);
+
+	List<Article> getByCriteria(ArticleCriteria searchCriteria, int offset, int limit);
+
+	long getCountByCriteria(ArticleCriteria searchCriteria);
 }

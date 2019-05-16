@@ -26,4 +26,17 @@ public class JdbcCategoryRepository extends AbstractJdbcRepository implements Ca
 	public Category getByUrl(String url) {
 		return executeSelect(conn -> JDBCUtils.select(conn, SqlQueries.GET_CATEGORY_BY_URL, CATEGORY_MAPPER, url));
 	}
+	
+	@Override
+	public List<Category> getByArticleSearchQuery(String searchQuery) {
+		return executeSelect(conn -> 
+		JDBCUtils.select(
+				conn, SqlQueries.GET_ALL_CATEGORIES_BY_SEARCH_QUERY,
+				CATEGORIES_MAPPER, getLikeParam(searchQuery), getLikeParam(searchQuery)
+				));
+	}
+	
+	private String getLikeParam(String query) {
+		return "%" + query + "%";
+	}
 }

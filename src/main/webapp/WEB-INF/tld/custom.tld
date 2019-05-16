@@ -21,4 +21,15 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<name>encoder</name>
+		<tag-class>com.revenat.iblog.presentation.tag.UrlEncoderTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>url</name>
+			<required>true</required>
+			<type>java.lang.String</type>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

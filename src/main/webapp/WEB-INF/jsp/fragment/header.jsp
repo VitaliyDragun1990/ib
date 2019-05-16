@@ -15,8 +15,11 @@
   		<!-- Collect the nav links, forms and other content for toggling -->
   		<div class="collapse navbar-collapse" id="blogNavBar">
   			<form action='<c:url value="/search" />' method="get" class="navbar-form navbar-right" role="search">
+  				<c:if test="${!empty selectedCategoryUrl}">
+  					<input type="hidden" name="categoryUrl" value="${selectedCategoryUrl}" />
+  				</c:if>
   				<div class="form-group">
-  					<input id="search" name="query" type="text" class="form-control" placeholder="Search query">
+  					<input id="search" name="query" type="text" class="form-control" value="${searchQuery}" placeholder="Search query">
   				</div>
   				<button type="submit" class="btn btn-default">Find</button>
   			</form>

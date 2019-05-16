@@ -23,7 +23,7 @@ public class ApplicationListener implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		sce.getServletContext().setAttribute(Attribute.CATEGORY_MAP, categoryService.getAllCategories());
+//		sce.getServletContext().setAttribute(Attribute.CATEGORY_MAP, categoryService.getCategoriesWithTotalArticleCount());
 		LOGGER.info("Application started");
 	}
 

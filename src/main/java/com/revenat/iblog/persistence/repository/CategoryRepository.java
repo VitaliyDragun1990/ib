@@ -9,4 +9,6 @@ public interface CategoryRepository {
 	List<Category> getAll();
 	
 	Category getByUrl(String url);
+	
+	List<Category> getByArticleSearchQuery(String searchQuery);
 }
