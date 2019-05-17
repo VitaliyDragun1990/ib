@@ -44,7 +44,7 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		servletReg = ctx.addServlet("NewsByCategoryController", new NewsByCategoryController(serviceManager.getArticleService()));
 		servletReg.addMapping(URL.NEWS_BY_CATEGORY);
 		
-		servletReg = ctx.addServlet("ArtilceController", new ArticleController());
+		servletReg = ctx.addServlet("ArtilceController", new ArticleController(serviceManager.getArticleService()));
 		servletReg.addMapping(URL.ARTICLE);
 		
 		

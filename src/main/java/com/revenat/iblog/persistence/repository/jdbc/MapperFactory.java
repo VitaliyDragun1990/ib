@@ -62,6 +62,10 @@ final class MapperFactory {
 		return getMultipleRowsMapper(ARTICLE_HANDLER);
 	}
 	
+	public static ResultSetHandler<Article> getArticleMapper() {
+		return getSingleRowMapper(ARTICLE_HANDLER);
+	}
+	
 	public static ResultSetHandler<Long> getCountMapper() {
 		return COUNT_RESULT_SET_HANDLER;
 	}

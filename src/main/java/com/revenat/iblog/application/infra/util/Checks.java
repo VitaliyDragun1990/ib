@@ -1,5 +1,6 @@
 package com.revenat.iblog.application.infra.util;
 
+import com.revenat.iblog.application.infra.exception.ResourceNotFoundException;
 import com.revenat.iblog.application.infra.exception.flow.InvalidParameterException;
 import com.revenat.iblog.application.infra.exception.flow.ValidationException;
 
@@ -16,6 +17,20 @@ public class Checks {
 	public static void checkParam(boolean check, String message, Object... args) throws InvalidParameterException {
 		if (!check) {
 			throw new InvalidParameterException(String.format(message, args));
+		}
+	}
+	
+	/**
+	 * Verifies that specified resource not {@code null}
+	 * 
+	 * @param resource   resource to check for {@code null}
+	 * @param message specific message to pass to posiible exception
+	 * @param args    optional arguments to message string
+	 * @throws ResourceNotFoundException
+	 */
+	public static void checkResource(Object resource, String message, Object... args) throws ResourceNotFoundException {
+		if (resource == null) {
+			throw new ResourceNotFoundException(String.format(message, args));
 		}
 	}
 

@@ -7,7 +7,7 @@
 		<c:when test="${statusCode == 400 }">Bad request: ${errorMessage}</c:when>
 		<c:when test="${statusCode == 401 }">You must be authorized to view this resource</c:when>
 		<c:when test="${statusCode == 403 }">You don't have permissions to view this resource</c:when>
-		<c:when test="${statusCode == 404 }">Resource not found</c:when>
+		<c:when test="${statusCode == 404 }">Resource not found: ${errorMessage}</c:when>
 		<c:otherwise>Can't process this request! Try again later...</c:otherwise>
 	</c:choose>
 </div>

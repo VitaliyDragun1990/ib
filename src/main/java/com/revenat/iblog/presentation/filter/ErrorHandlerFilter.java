@@ -39,14 +39,22 @@ public class ErrorHandlerFilter extends AbstractFilter {
 	private void processException(Exception e, HttpServletRequest req, HttpServletResponse resp) {
 		String requestUri = req.getRequestURI();
 		int statusCode = getStatusCode(e);
+		logException(e, requestUri, statusCode);
+		
+		if (statusCode == HttpServletResponse.SC_BAD_REQUEST || statusCode == HttpServletResponse.SC_NOT_FOUND) {
+			req.setAttribute(Attribute.ERROR_MESSAGE, e.getMessage());
+		}
+		
+		req.setAttribute(Attribute.STATUS_CODE, statusCode);
+		resp.setStatus(statusCode);
+	}
+
+	private void logException(Exception e, String requestUri, int statusCode) {
 		if (statusCode != HttpServletResponse.SC_BAD_REQUEST) {
 			LOGGER.error("Request {} failed: {}", requestUri, e.getMessage(), e);
 		} else {
-			req.setAttribute(Attribute.ERROR_MESSAGE, e.getMessage());
 			LOGGER.warn("Bad request {}: {}", requestUri, e.getMessage(), e);
 		}
-		req.setAttribute(Attribute.STATUS_CODE, statusCode);
-		resp.setStatus(statusCode);
 	}
 	
 	private void sendResponse(HttpServletRequest req, HttpServletResponse resp, Exception e) 

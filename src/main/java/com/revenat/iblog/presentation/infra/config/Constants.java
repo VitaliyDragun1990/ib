@@ -15,6 +15,7 @@ public final class Constants {
 		public static final String SEARCH_QUERY = "searchQuery";
 		public static final String ARTICLE_COUNT = "articleCount";
 		public static final String PAGINATION = "pagination";
+		public static final String ARTICLE = "article";
 
 		private Attribute() {
 		}
@@ -51,7 +52,7 @@ public final class Constants {
 	public static class URL {
 		public static final String NEWS = "/news";
 		public static final String NEWS_BY_CATEGORY = "/news/*";
-		public static final String ARTICLE = "/article";
+		public static final String ARTICLE = "/article/*";
 		public static final String CONTACT = "/contact";
 		public static final String ABOUT = "/about";
 		public static final String SEARCH = "/search";

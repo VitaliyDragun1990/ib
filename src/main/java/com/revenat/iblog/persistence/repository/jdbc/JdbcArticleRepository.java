@@ -14,10 +14,16 @@ import com.revenat.iblog.persistence.repository.ArticleRepository;
 
 public class JdbcArticleRepository extends AbstractJdbcRepository implements ArticleRepository {
 	private static final ResultSetHandler<List<Article>> ARTICLES_MAPPER = MapperFactory.getArticlesMapper();
+	private static final ResultSetHandler<Article> ARTICLE_MAPPER = MapperFactory.getArticleMapper();
 	private static final ResultSetHandler<Long> COUNT_MAPPER = MapperFactory.getCountMapper();
 
 	public JdbcArticleRepository(DataSource dataSource) {
 		super(dataSource);
+	}
+	
+	@Override
+	public Article getById(long id) {
+		return executeSelect(conn -> JDBCUtils.select(conn, SqlQueries.GET_ARTICLE_BY_ID, ARTICLE_MAPPER, id));
 	}
 
 	@Override
@@ -53,6 +59,13 @@ public class JdbcArticleRepository extends AbstractJdbcRepository implements Art
 	public long getCountByCriteria(ArticleCriteria searchCriteria) {
 		SqlQuery query = buildCountQuery(searchCriteria);
 		return executeSelect(conn -> JDBCUtils.select(conn, query.getQuery(), COUNT_MAPPER, query.getParams()));
+	}
+	
+	@Override
+	public void update(Article article) {
+		executeUpdate(conn -> 
+		JDBCUtils.executeUpdate(conn, SqlQueries.UPDATE_ARTICLE,
+				article.getNumberOfViews(), article.getNumberOfComments(), article.getId()));
 	}
 	
 	private SqlQuery buildSelectQuery(ArticleCriteria criteria, Object... params) {
