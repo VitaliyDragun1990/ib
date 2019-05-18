@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.revenat.iblog.application.domain.entity.Category;
+import com.revenat.iblog.application.infra.util.Checks;
 import com.revenat.iblog.persistence.repository.CategoryRepository;
 
 public class CategoryService {
@@ -12,6 +13,12 @@ public class CategoryService {
 
 	CategoryService(CategoryRepository categoryRepo) {
 		this.categoryRepo = categoryRepo;
+	}
+	
+	public Category findByUrl(String categoryUrl) {
+		Category category = categoryRepo.getByUrl(categoryUrl);
+//		Checks.checkResource(category, "There is no category for such url: %s", categoryUrl);
+		return category;
 	}
 
 	public Map<Integer, Category> getCategoriesWithTotalArticleCount() {

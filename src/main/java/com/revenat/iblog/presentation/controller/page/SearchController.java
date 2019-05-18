@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.revenat.iblog.application.domain.entity.Article;
 import com.revenat.iblog.application.domain.model.Items;
 import com.revenat.iblog.application.service.ArticleService;
+import com.revenat.iblog.application.service.CategoryService;
 import com.revenat.iblog.presentation.controller.AbstractController;
 import com.revenat.iblog.presentation.infra.config.Constants;
 import com.revenat.iblog.presentation.infra.config.Constants.Attribute;
@@ -27,9 +28,11 @@ public class SearchController extends AbstractController {
 
 	
 	private final ArticleService articleService;
+	private final CategoryService categoryService;
 	
-	public SearchController(ArticleService articleService) {
+	public SearchController(ArticleService articleService, CategoryService categoryService) {
 		this.articleService = articleService;
+		this.categoryService = categoryService;
 	}
 
 	@Override
@@ -49,6 +52,7 @@ public class SearchController extends AbstractController {
 			req.setAttribute(Attribute.SEARCH_QUERY, query);
 			req.setAttribute(Attribute.ARTICLE_COUNT, articles.getCount());
 			req.setAttribute(Attribute.SELECTED_CATEGORY_URL, categoryUrl);
+			req.setAttribute(Attribute.SELECTED_CATEGORY, categoryService.findByUrl(categoryUrl));
 			req.setAttribute(Attribute.PAGINATION, new Pagination.Builder(baseUrl, page, articles.getCount()).build());
 			
 			forwardToPage(Page.SEARCH, req, resp);

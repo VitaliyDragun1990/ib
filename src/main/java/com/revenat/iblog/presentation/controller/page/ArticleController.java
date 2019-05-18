@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import com.revenat.iblog.application.domain.entity.Article;
+import com.revenat.iblog.application.infra.exception.ResourceNotFoundException;
 import com.revenat.iblog.application.service.ArticleService;
 import com.revenat.iblog.presentation.controller.AbstractController;
 import com.revenat.iblog.presentation.infra.config.Constants.Attribute;
 import com.revenat.iblog.presentation.infra.config.Constants.Page;
-import com.revenat.iblog.presentation.infra.config.Constants.URL;
 
 public class ArticleController extends AbstractController {
 	private static final long serialVersionUID = -6579422407941195197L;
@@ -29,7 +29,7 @@ public class ArticleController extends AbstractController {
 		try {
 			processRequest(req, resp);
 		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-			redirect(URL.NEWS, resp);
+			throw new ResourceNotFoundException("There is no resource for such url: " + req.getRequestURI());
 		}
 	}
 

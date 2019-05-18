@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.revenat.iblog.application.domain.entity.Article;
 import com.revenat.iblog.application.domain.model.Items;
 import com.revenat.iblog.application.service.ArticleService;
+import com.revenat.iblog.application.service.CategoryService;
 import com.revenat.iblog.presentation.controller.AbstractController;
 import com.revenat.iblog.presentation.infra.config.Constants;
 import com.revenat.iblog.presentation.infra.config.Constants.Attribute;
@@ -21,9 +22,11 @@ public class NewsByCategoryController extends AbstractController {
 	private static final int SUBSTRING_INDEX = URL.NEWS.length();
 	
 	private final ArticleService articleService;
+	private final CategoryService categoryService;
 	
-	public NewsByCategoryController(ArticleService articleService) {
+	public NewsByCategoryController(ArticleService articleService, CategoryService categoryService) {
 		this.articleService = articleService;
+		this.categoryService = categoryService;
 	}
 
 	@Override
@@ -36,6 +39,7 @@ public class NewsByCategoryController extends AbstractController {
 		
 		req.setAttribute(Attribute.ARTICLES, articles.getItems());
 		req.setAttribute(Attribute.SELECTED_CATEGORY_URL, categoryUrl);
+		req.setAttribute(Attribute.SELECTED_CATEGORY, categoryService.findByUrl(categoryUrl));
 		req.setAttribute(Attribute.PAGINATION, pagination);
 		
 		forwardToPage(Page.NEWS, req, resp);

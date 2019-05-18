@@ -33,6 +33,7 @@ public class NewsController extends AbstractController {
 		
 		req.setAttribute(Attribute.ARTICLES, articles.getItems());
 		req.setAttribute(Attribute.PAGINATION, pagination);
+		req.setAttribute(Attribute.IS_NEWS_PAGE, true);
 		
 		forwardToPage(Page.NEWS, req, resp);
 	}

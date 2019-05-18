@@ -16,6 +16,8 @@ public final class Constants {
 		public static final String ARTICLE_COUNT = "articleCount";
 		public static final String PAGINATION = "pagination";
 		public static final String ARTICLE = "article";
+		public static final String SELECTED_CATEGORY = "selectedCategory";
+		public static final String IS_NEWS_PAGE = "isNewsPage";
 
 		private Attribute() {
 		}

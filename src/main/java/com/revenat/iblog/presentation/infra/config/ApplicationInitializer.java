@@ -41,7 +41,8 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		Dynamic servletReg = ctx.addServlet("NewsController", new NewsController(serviceManager.getArticleService()));
 		servletReg.addMapping(URL.NEWS);
 		
-		servletReg = ctx.addServlet("NewsByCategoryController", new NewsByCategoryController(serviceManager.getArticleService()));
+		servletReg = ctx.addServlet("NewsByCategoryController",
+				new NewsByCategoryController(serviceManager.getArticleService(), serviceManager.getCategoryService()));
 		servletReg.addMapping(URL.NEWS_BY_CATEGORY);
 		
 		servletReg = ctx.addServlet("ArtilceController", new ArticleController(serviceManager.getArticleService()));
@@ -54,7 +55,8 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		servletReg = ctx.addServlet("AboutController", new AboutController());
 		servletReg.addMapping(URL.ABOUT);
 		
-		servletReg = ctx.addServlet("SearchController", new SearchController(serviceManager.getArticleService()));
+		servletReg = ctx.addServlet("SearchController",
+				new SearchController(serviceManager.getArticleService(), serviceManager.getCategoryService()));
 		servletReg.addMapping(URL.SEARCH);
 		
 		servletReg = ctx.addServlet("ErrorController", new ErrorController());
