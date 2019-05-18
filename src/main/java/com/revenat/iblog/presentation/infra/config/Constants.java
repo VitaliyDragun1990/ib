@@ -20,6 +20,7 @@ public final class Constants {
 		public static final String SELECTED_CATEGORY = "selectedCategory";
 		public static final String IS_NEWS_PAGE = "isNewsPage";
 		public static final String COMMENTS = "comments";
+		public static final String SOCIAL_GOOGLEPLUS_CLIENT_ID = "social_googleplus_clientId";
 
 		private Attribute() {
 		}

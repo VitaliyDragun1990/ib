@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
 <article class="panel panel-default">
 	<c:set var="category" value="${CATEGORY_MAP[article.categoryId]}" />
 	<c:set var="articleLink" value="/article/${article.id}${article.url}" />

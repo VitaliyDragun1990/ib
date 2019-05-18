@@ -24,7 +24,8 @@ public class ArticleService {
 	private final CategoryRepository categoryRepo;
 	private final CommentRepository commentRepo;
 
-	public ArticleService(ArticleRepository articleRepo, CategoryRepository categoryRepo, CommentRepository commentRepo) {
+	public ArticleService(ArticleRepository articleRepo, CategoryRepository categoryRepo,
+			CommentRepository commentRepo) {
 		this.articleRepo = articleRepo;
 		this.categoryRepo = categoryRepo;
 		this.commentRepo = commentRepo;
@@ -129,14 +130,20 @@ public class ArticleService {
 		article.setNumberOfViews(article.getNumberOfViews() + 1);
 		articleRepo.update(article);
 	}
-	
-	public List<Comment> listComments(long articleId, int pageNumber, int pageSize) {
-		validate(pageNumber, pageSize);
-		
-		return loadComments(articleId, calculateOffset(pageNumber, pageSize), pageSize);
-	}
-	
+
+	/**
+	 * Loads more {@link Comment}s for {@link Article} denoted by specified
+	 * {@code articleId}.
+	 * 
+	 * @param articleId id of the article to load comments for
+	 * @param offset    number of comments to ommit from the start
+	 * @param pageSize  max number of comments to load
+	 * @return list with comments for specified article, or empty one if no comments
+	 *         were found.
+	 */
 	public List<Comment> loadComments(long articleId, int offset, int pageSize) {
+		Checks.checkParam(offset >= 0, "offset can not be less that 0: %d", pageSize);
+		Checks.checkParam(pageSize >= 1, "page size can not be less that 1: %d", pageSize);
 		return commentRepo.getByArticle(articleId, offset, pageSize);
 	}
 

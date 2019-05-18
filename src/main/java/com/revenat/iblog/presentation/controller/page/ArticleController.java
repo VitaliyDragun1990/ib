@@ -43,7 +43,7 @@ public class ArticleController extends AbstractController {
 			redirect(getArticleLink(article), resp);
 		} else {
 			articleService.incrementArticleViewCount(article);
-			List<Comment> comments = articleService.listComments(article.getId(), 1, Constants.MAX_COMMENTS_PER_PAGE);
+			List<Comment> comments = articleService.loadComments(article.getId(), 0, Constants.MAX_COMMENTS_PER_PAGE);
 			
 			req.setAttribute(Attribute.ARTICLE, article);
 			req.setAttribute(Attribute.COMMENTS, comments);

@@ -78,6 +78,6 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 				true,
 				"/*");
 		
-		ctx.addListener(new ApplicationListener(serviceManager, serviceManager.getCategoryService()));
+		ctx.addListener(new ApplicationListener(serviceManager));
 	}
 }

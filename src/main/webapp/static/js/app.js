@@ -5,7 +5,10 @@ $(function() {
     	$('.reply').on('click', function() {
     		reply($(this).attr('data-name'));
     	});
+    	$('#sendComment').on('click', sendComment);
+    	$('.logout').on('click', gpLogout);
     };
+    
 
     /*
     * This function responseible for animating transition to the search form

@@ -154,6 +154,17 @@ footer .copywrite {
 	cursor: pointer;
 }
 
+.logout {
+	border-left-width: 10px;
+    margin-left: 25px;
+    margin-top: 25px;
+    font-weight: 600;
+}
+
+.reply {
+	font-weight: bold;
+}
+
 @media (min-width: 991px) {
 	#categories {
 		display: block !important;
