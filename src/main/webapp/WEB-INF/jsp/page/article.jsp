@@ -53,7 +53,7 @@
 		
 		<!-- User comments section  -->
 		<div class="comments">
-			<div class="comments-container">
+			<div id="comments-container" data-comments-count="${article.numberOfComments}" data-article-id="${article.id}">
 				<jsp:include page="../fragment/comments.jsp"/>		
 			</div>
 			

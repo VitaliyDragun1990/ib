@@ -26,11 +26,26 @@ $(function() {
     var loadMoreComments = function() {
     	$('#loadMore').addClass('hidden');
     	$('#loadIndicator').removeClass('hidden');
-
-    	setTimeout(function() {
-    		$('#loadIndicator').addClass('hidden');
-    		$('#loadMore').removeClass('hidden');
-    	}, 1000);
+    	var offset = $('#comments-container .comment-item').length;
+    	var articleId = $('#comments-container').attr('data-article-id');
+    	
+    	$.ajax({
+    		url: ctx + '/ajax/comments?offset=' + offset + '&articleId=' + articleId,
+    		success: function(data) {
+    			$('#loadIndicator').addClass('hidden');
+    			$('#comments-container').append(data);
+        		var actualTotal = $('#comments-container .comment-item').length;
+        		var maxTotal = $('#comments-container').attr('data-comments-count');
+        		if (actualTotal < maxTotal) {
+        			$('#loadMore').removeClass('hidden');
+				}
+    		},
+    		error: function(data) {
+    			alert(messages.errorAjax);
+    			$('#loadIndicator').addClass('hidden');
+    			$('#loadMore').removeClass('hidden');
+    		}
+    	});
     };
 
     /*

@@ -55,7 +55,7 @@ final class MapperFactory {
 		return a;
 	};
 	
-	private static final ResultSetHandler<Comment> COMMENT_HANDLER = rs -> {
+	/*private static final ResultSetHandler<Comment> COMMENT_HANDLER = rs -> {
 		Comment c = new Comment();
 		c.setId(rs.getLong("id"));
 		c.setArticleId(rs.getLong("article_id"));
@@ -66,7 +66,7 @@ final class MapperFactory {
 		c.setAccount(a);
 		
 		return c;
-	};
+	};*/
 	
 	private static final ResultSetHandler<Comment> COMMENT_WITH_ACCOUNT_HANDLER = rs -> {
 		Comment c = new Comment();

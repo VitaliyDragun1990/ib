@@ -133,7 +133,11 @@ public class ArticleService {
 	public List<Comment> listComments(long articleId, int pageNumber, int pageSize) {
 		validate(pageNumber, pageSize);
 		
-		return commentRepo.getByArticle(articleId, calculateOffset(pageNumber, pageSize), pageSize);
+		return loadComments(articleId, calculateOffset(pageNumber, pageSize), pageSize);
+	}
+	
+	public List<Comment> loadComments(long articleId, int offset, int pageSize) {
+		return commentRepo.getByArticle(articleId, offset, pageSize);
 	}
 
 	private int calculateOffset(int pageNumber, int pageSize) {

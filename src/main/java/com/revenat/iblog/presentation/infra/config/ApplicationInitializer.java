@@ -12,6 +12,7 @@ import javax.servlet.ServletRegistration.Dynamic;
 import javax.servlet.SessionTrackingMode;
 
 import com.revenat.iblog.application.service.ServiceManager;
+import com.revenat.iblog.presentation.controller.ajax.MoreCommentsController;
 import com.revenat.iblog.presentation.controller.page.AboutController;
 import com.revenat.iblog.presentation.controller.page.ArticleController;
 import com.revenat.iblog.presentation.controller.page.ContactController;
@@ -61,6 +62,9 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		
 		servletReg = ctx.addServlet("ErrorController", new ErrorController());
 		servletReg.addMapping(URL.ERROR);
+		
+		servletReg = ctx.addServlet("MoreCommentsController", new MoreCommentsController(serviceManager.getArticleService()));
+		servletReg.addMapping(URL.AJAX_COMMENTS);
 		
 		FilterRegistration.Dynamic filterReg = ctx.addFilter("ErrorHandlerFilter", new ErrorHandlerFilter());
 		filterReg.addMappingForUrlPatterns(

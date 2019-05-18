@@ -27,6 +27,6 @@ public class RepositoryFactory {
 	}
 	
 	public CommentRepository createCommentRepository() {
-		return new JdbcCommentRepository(dataSource, createAccountRepository());
+		return new JdbcCommentRepository(dataSource);
 	}
 }

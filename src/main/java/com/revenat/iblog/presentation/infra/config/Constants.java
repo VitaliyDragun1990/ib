@@ -48,7 +48,8 @@ public final class Constants {
 	}
 
 	public static class Fragment {
-
+		public static final String COMMENTS = "comments.jsp";
+		
 		private Fragment() {
 		}
 	}
@@ -61,6 +62,7 @@ public final class Constants {
 		public static final String ABOUT = "/about";
 		public static final String SEARCH = "/search";
 		public static final String ERROR = "/error";
+		public static final String AJAX_COMMENTS = "/ajax/comments";
 
 		private URL() {
 		}

@@ -49,6 +49,7 @@
 	</script>
 	<script src='<c:url value="/static/js/jquery-3.3.1.min.js" />'></script>
 	<script src='<c:url value="/static/js/bootstrap.js" />'></script>
+	<script src='<c:url value="/static/js/messages.jsp" />'></script>
 	<script src='<c:url value="/static/js/app.js" />'></script>
 </body>
 
