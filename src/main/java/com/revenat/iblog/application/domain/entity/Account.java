@@ -37,15 +37,6 @@ public class Account extends AbstractEntity<Long> {
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
-	
-	public boolean isAvatarExists() {
-		return avatar != null;
-	}
-	
-	// TODO: remove this presentation-related method from domain entity
-	public String getNoAvatar() {
-		return "/static/img/no_avatar.png";
-	}
 
 	public LocalDateTime getCreated() {
 		return created;

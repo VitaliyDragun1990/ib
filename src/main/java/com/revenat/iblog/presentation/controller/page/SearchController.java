@@ -51,7 +51,7 @@ public class SearchController extends AbstractController {
 			req.setAttribute(Attribute.ARTICLES, articles.getItems());
 			req.setAttribute(Attribute.SEARCH_QUERY, query);
 			req.setAttribute(Attribute.ARTICLE_COUNT, articles.getCount());
-			req.setAttribute(Attribute.SELECTED_CATEGORY_URL, categoryUrl);
+//			req.setAttribute(Attribute.SELECTED_CATEGORY_URL, categoryUrl);
 			req.setAttribute(Attribute.SELECTED_CATEGORY, categoryService.findByUrl(categoryUrl));
 			req.setAttribute(Attribute.PAGINATION, new Pagination.Builder(baseUrl, page, articles.getCount()).build());
 			

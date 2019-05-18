@@ -5,8 +5,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revenat.iblog.application.domain.entity.Account;
 import com.revenat.iblog.application.domain.entity.Article;
 import com.revenat.iblog.application.domain.entity.Category;
+import com.revenat.iblog.application.domain.entity.Comment;
 import com.revenat.iblog.persistence.infra.util.JDBCUtils.ResultSetHandler;
 
 /**
@@ -42,6 +44,47 @@ final class MapperFactory {
 		return a;
 	};
 	
+	private static final ResultSetHandler<Account> ACCOUNT_HANDLER = rs -> {
+		Account a = new Account();
+		a.setId(rs.getLong("id"));
+		a.setEmail(rs.getString("email"));
+		a.setName(rs.getString("name"));
+		a.setAvatar(rs.getString("avatar"));
+		a.setCreated(rs.getObject("created", LocalDateTime.class));
+		
+		return a;
+	};
+	
+	private static final ResultSetHandler<Comment> COMMENT_HANDLER = rs -> {
+		Comment c = new Comment();
+		c.setId(rs.getLong("id"));
+		c.setArticleId(rs.getLong("article_id"));
+		c.setContent(rs.getString("content"));
+		c.setCreated(rs.getObject("created", LocalDateTime.class));
+		Account a = new Account();
+		a.setId(rs.getLong("account_id"));
+		c.setAccount(a);
+		
+		return c;
+	};
+	
+	private static final ResultSetHandler<Comment> COMMENT_WITH_ACCOUNT_HANDLER = rs -> {
+		Comment c = new Comment();
+		c.setId(rs.getLong("id"));
+		c.setArticleId(rs.getLong("article_id"));
+		c.setContent(rs.getString("content"));
+		c.setCreated(rs.getObject("created", LocalDateTime.class));
+		Account a = new Account();
+		a.setId(rs.getLong("account_id"));
+		a.setEmail(rs.getString("email"));
+		a.setName(rs.getString("name"));
+		a.setAvatar(rs.getString("avatar"));
+		a.setCreated(rs.getObject("accountCreated", LocalDateTime.class));
+		c.setAccount(a);
+		
+		return c;
+	};
+	
 	public static final ResultSetHandler<Long> COUNT_RESULT_SET_HANDLER = rs -> {
 		if (rs.next()) {
 			return rs.getLong("count");
@@ -64,6 +107,15 @@ final class MapperFactory {
 	
 	public static ResultSetHandler<Article> getArticleMapper() {
 		return getSingleRowMapper(ARTICLE_HANDLER);
+	}
+	
+	public static ResultSetHandler<Account> getAccountMapper() {
+		return getSingleRowMapper(ACCOUNT_HANDLER);
+	}
+	
+	public static ResultSetHandler<List<Comment>> getCommentsMapper() {
+		return getMultipleRowsMapper(COMMENT_WITH_ACCOUNT_HANDLER);
+//		return getMultipleRowsMapper(COMMENT_HANDLER);
 	}
 	
 	public static ResultSetHandler<Long> getCountMapper() {

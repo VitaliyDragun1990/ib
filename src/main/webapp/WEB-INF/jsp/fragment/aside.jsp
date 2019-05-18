@@ -8,6 +8,8 @@
 <div id="categories" class="panel panel-default collapse" data-spy="affix" data-offset-top="60" data-offset-bottom="400">
 	<div class="panel-heading hidden-sm hidden-xs">Categories</div>
 	<div class="list-group">
-		<iblog:category-list categories="${CATEGORY_MAP.values()}" selectedCategoryUrl="${selectedCategoryUrl}" searchQuery="${searchQuery}"/>
+		<iblog:category-list categories="${CATEGORY_MAP.values()}"
+		 					 selectedCategoryUrl="${!empty selectedCategory ? selectedCategory.url : ''}"
+		 					 searchQuery="${searchQuery}"/>
 	</div>
 </div>

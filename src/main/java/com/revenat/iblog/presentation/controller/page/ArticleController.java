@@ -1,6 +1,7 @@
 package com.revenat.iblog.presentation.controller.page;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 
 import com.revenat.iblog.application.domain.entity.Article;
+import com.revenat.iblog.application.domain.entity.Comment;
 import com.revenat.iblog.application.infra.exception.ResourceNotFoundException;
 import com.revenat.iblog.application.service.ArticleService;
 import com.revenat.iblog.presentation.controller.AbstractController;
+import com.revenat.iblog.presentation.infra.config.Constants;
 import com.revenat.iblog.presentation.infra.config.Constants.Attribute;
 import com.revenat.iblog.presentation.infra.config.Constants.Page;
 
@@ -40,7 +43,10 @@ public class ArticleController extends AbstractController {
 			redirect(getArticleLink(article), resp);
 		} else {
 			articleService.incrementArticleViewCount(article);
+			List<Comment> comments = articleService.listComments(article.getId(), 1, Constants.MAX_COMMENTS_PER_PAGE);
+			
 			req.setAttribute(Attribute.ARTICLE, article);
+			req.setAttribute(Attribute.COMMENTS, comments);
 			forwardToPage(Page.ARTILCE, req, resp);
 		}
 	}

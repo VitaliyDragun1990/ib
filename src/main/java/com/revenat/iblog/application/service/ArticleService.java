@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.revenat.iblog.application.domain.entity.Article;
 import com.revenat.iblog.application.domain.entity.Category;
+import com.revenat.iblog.application.domain.entity.Comment;
 import com.revenat.iblog.application.domain.model.Items;
 import com.revenat.iblog.application.domain.search.criteria.ArticleCriteria;
 import com.revenat.iblog.application.infra.exception.ResourceNotFoundException;
 import com.revenat.iblog.application.infra.util.Checks;
 import com.revenat.iblog.persistence.repository.ArticleRepository;
 import com.revenat.iblog.persistence.repository.CategoryRepository;
+import com.revenat.iblog.persistence.repository.CommentRepository;
 
 /**
  * This component contains logic related to {@link Article} entity.
@@ -20,10 +22,12 @@ import com.revenat.iblog.persistence.repository.CategoryRepository;
 public class ArticleService {
 	private final ArticleRepository articleRepo;
 	private final CategoryRepository categoryRepo;
+	private final CommentRepository commentRepo;
 
-	public ArticleService(ArticleRepository articleRepo, CategoryRepository categoryRepo) {
+	public ArticleService(ArticleRepository articleRepo, CategoryRepository categoryRepo, CommentRepository commentRepo) {
 		this.articleRepo = articleRepo;
 		this.categoryRepo = categoryRepo;
+		this.commentRepo = commentRepo;
 	}
 
 	/**
@@ -124,6 +128,12 @@ public class ArticleService {
 	public void incrementArticleViewCount(Article article) {
 		article.setNumberOfViews(article.getNumberOfViews() + 1);
 		articleRepo.update(article);
+	}
+	
+	public List<Comment> listComments(long articleId, int pageNumber, int pageSize) {
+		validate(pageNumber, pageSize);
+		
+		return commentRepo.getByArticle(articleId, calculateOffset(pageNumber, pageSize), pageSize);
 	}
 
 	private int calculateOffset(int pageNumber, int pageSize) {

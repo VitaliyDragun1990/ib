@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <article class="panel panel-default">
 	<c:set var="category" value="${CATEGORY_MAP[article.categoryId]}" />
@@ -58,10 +59,12 @@
 			
 			<div class="hidden-print">
 				<!-- Load more comments button  -->
-				<a id="loadMore" class="btn btn-info btn-block">Load more</a>
+				<a id="loadMore" class="btn btn-info btn-block ${article.numberOfComments > fn:length(comments) ? '' : 'hidden'}">
+					Load more
+				</a>
 				<img src='<c:url value="/static/img/loading.gif" />' alt="Loading" id="loadIndicator" class="hidden center-block">
 			</div>
 		</div>
-		<!-- User comments section  -->
+		
 	</div>
 </article>

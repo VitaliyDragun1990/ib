@@ -9,6 +9,7 @@ final class SqlQueries {
 			+ " GROUP BY cat.id, cat.url, cat.name"
 			+ " ORDER BY cat.name";
 	public static final String GET_CATEGORY_BY_URL = "SELECT * FROM category WHERE url = ?";
+	
 	public static final String GET_ARTICLE_BY_ID = "SELECT * FROM article WHERE id = ?";
 	public static final String UPDATE_ARTICLE = "UPDATE article SET views = ?, comments = ? WHERE id = ?";
 	public static final String GET_ALL_ARTICLES = "SELECT * FROM article ORDER BY created DESC LIMIT ? OFFSET ?";
@@ -23,6 +24,16 @@ final class SqlQueries {
 	public static final String COUNT_ARTICLES_BY_SEARCH_QUERY = "SELECT count(*) AS count FROM article WHERE (title ILIKE ? OR content ILIKE ?)";
 	public static final String COUNT_ARTICLES_BY_SEARCH_QUERY_AND_CATEGORY =
 			"SELECT count(*) AS count FROM article WHERE (title ILIKE ? OR content ILIKE ?) AND category_id = ?";
+	
+	public static final String GET_ACCOUNT_BY_ID = "SELECT * FROM account WHERE id = ?";
+	
+	public static final String GET_COMMENT_BY_ARTICLE_ID = 
+			"SELECT * FROM comment WHERE article_id = ? ORDER BY created DESC LIMIT ? OFFSET ?";
+	public static final String GET_COMMENT_BY_ARTICLE_ID_JOIN = 
+			"SELECT c.*, a.email, a.name, a.avatar, a.created AS accountCreated"
+			+ " FROM comment AS c INNER JOIN account AS a ON c.account_id = a.id"
+			+ " WHERE c.article_id = ? ORDER BY created DESC LIMIT ? OFFSET ?";
+	public static final String COUNT_COMMENTS_BY_ARTICLE = "SELECT count(*) AS count FROM comment WHERE article_id = ?";
 
 	private SqlQueries() {}
 }

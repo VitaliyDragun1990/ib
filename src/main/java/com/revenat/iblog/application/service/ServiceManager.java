@@ -60,7 +60,9 @@ public class ServiceManager {
 		RepositoryFactory repoFactory = new RepositoryFactory(dataSource);
 		CategoryRepository categoryRepository = repoFactory.createCategoryRepository();
 		categoryService = new CategoryService(categoryRepository);
-		articleService = new ArticleService(repoFactory.createArticleRepository(), categoryRepository);
+		articleService = new ArticleService(repoFactory.createArticleRepository(),
+											categoryRepository,
+											repoFactory.createCommentRepository());
 		
 		LOGGER.info("ServiceManager instance created");
 	}
