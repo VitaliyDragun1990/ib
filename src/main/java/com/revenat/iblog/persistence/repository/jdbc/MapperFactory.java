@@ -9,6 +9,7 @@ import com.revenat.iblog.application.domain.entity.Account;
 import com.revenat.iblog.application.domain.entity.Article;
 import com.revenat.iblog.application.domain.entity.Category;
 import com.revenat.iblog.application.domain.entity.Comment;
+import com.revenat.iblog.application.infra.exception.PersistenceException;
 import com.revenat.iblog.persistence.infra.util.JDBCUtils.ResultSetHandler;
 
 /**
@@ -85,11 +86,19 @@ final class MapperFactory {
 		return c;
 	};
 	
-	public static final ResultSetHandler<Long> COUNT_RESULT_SET_HANDLER = rs -> {
+	public static final ResultSetHandler<Long> COUNT_HANDLER = rs -> {
 		if (rs.next()) {
 			return rs.getLong("count");
 		} else {
 			return 0L;
+		}
+	};
+	
+	public static final ResultSetHandler<Long> GENERATED_LONG_ID_HANDLER = rs -> {
+		if (rs.next()) {
+			return rs.getLong("id");
+		} else {
+			throw new PersistenceException("Error while retrieving auto-generated key value: no key has been generated");
 		}
 	};
 	
@@ -119,7 +128,7 @@ final class MapperFactory {
 	}
 	
 	public static ResultSetHandler<Long> getCountMapper() {
-		return COUNT_RESULT_SET_HANDLER;
+		return COUNT_HANDLER;
 	}
 	
 	/**

@@ -1,4 +1,4 @@
-package com.revenat.iblog.presentation.service;
+package com.revenat.iblog.application.service;
 
 import java.io.IOException;
 

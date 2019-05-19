@@ -7,6 +7,8 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revenat.iblog.application.service.impl.FileStorageAvatarService;
+import com.revenat.iblog.application.service.impl.GooglePlusSocialService;
 import com.revenat.iblog.persistence.repository.CategoryRepository;
 import com.revenat.iblog.persistence.repository.RepositoryFactory;
 
@@ -19,6 +21,7 @@ public class ServiceManager {
 	private final BasicDataSource dataSource;
 	private final CategoryService categoryService;
 	private final ArticleService articleService;
+	private final AuthenticationService authService;
 	
 	public CategoryService getCategoryService() {
 		return categoryService;
@@ -28,9 +31,13 @@ public class ServiceManager {
 		return articleService;
 	}
 	
-	public static synchronized ServiceManager getInstance() {
+	public AuthenticationService getAuthService() {
+		return authService;
+	}
+	
+	public static synchronized ServiceManager getInstance(String applicationRootPath) {
 		if (instance == null) {
-			instance = new ServiceManager();
+			instance = new ServiceManager(applicationRootPath);
 		}
 		return instance;
 	}
@@ -48,7 +55,7 @@ public class ServiceManager {
 		LOGGER.info("ServiceManager instance destroyed");
 	}
 	
-	private ServiceManager() {
+	private ServiceManager(String applicationRootPath) {
 		applicationProperties = loadApplicationProperties();
 		dataSource = createDataSource(
 				getApplicationProperty("db.url"),
@@ -63,6 +70,10 @@ public class ServiceManager {
 		articleService = new ArticleService(repoFactory.createArticleRepository(),
 											categoryRepository,
 											repoFactory.createCommentRepository());
+		authService = new AuthenticationService(
+				new GooglePlusSocialService(getApplicationProperty("social.googleplus.clientId")),
+				new FileStorageAvatarService(applicationRootPath),
+				repoFactory.createAccountRepository());
 		
 		LOGGER.info("ServiceManager instance created");
 	}

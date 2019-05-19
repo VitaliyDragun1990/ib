@@ -9,4 +9,6 @@ public interface CommentRepository {
 	List<Comment> getByArticle(long articleId, int offset, int limit);
 	
 	long getCountByArticle(long articleId);
+	
+	Comment save(Comment comment);
 }

@@ -22,6 +22,7 @@
 		<restfb.version>2.20.0</restfb.version>
 		<google-api-client.version>1.28.0</google-api-client.version>
 		<thumbnailator.version>0.4.8</thumbnailator.version>
+		<commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<junit.version>4.12</junit.version>
 		<mockito.version>2.13.0</mockito.version>
 		<hamcrest.version>2.1</hamcrest.version>
@@ -96,6 +97,12 @@
 			<artifactId>thumbnailator</artifactId>
 			<version>${thumbnailator.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${commons-beanutils.version}</version>
+		</dependency>
+
 
 
 

@@ -5,6 +5,7 @@
 <c:set var="noAvatar" value="/static/img/no_avatar.png"/>
 <c:forEach var="comment" items="${comments}">
 	<c:set var="account" value="${comment.account}"/>
+	
 	<div class="meida comment-item" data-comment-id="${comment.id}">
 		<div class="media-left">
 			<img src='<c:url value="${!empty account.avatar ? account.avatar : noAvatar}" />' alt="${account.name}" class="media-object img-rounded">

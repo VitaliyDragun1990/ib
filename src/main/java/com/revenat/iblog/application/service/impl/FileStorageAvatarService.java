@@ -1,4 +1,4 @@
-package com.revenat.iblog.presentation.service.impl;
+package com.revenat.iblog.application.service.impl;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revenat.iblog.presentation.service.AvatarService;
+import com.revenat.iblog.application.service.AvatarService;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -41,6 +41,7 @@ public class FileStorageAvatarService implements AvatarService {
 			File avatar = new File(mediaDirParent + avatarPath);
 			if (avatar.exists()) {
 				if (avatar.delete()) {
+					LOGGER.info("Avatar {} has been deleted.", avatarPath);
 					return true;
 				} else {
 					LOGGER.error("Can not delete file: {}", avatar.getAbsolutePath());
@@ -61,7 +62,7 @@ public class FileStorageAvatarService implements AvatarService {
 	}
 
 	private String normalizeMediaDirPath(String path) {
-		path = path.replaceAll("\\", "/");
+		path = path.replace("\\", "/");
 		if (path.endsWith("/")) {
 			path = path.substring(0, path.length() - 1);
 		}

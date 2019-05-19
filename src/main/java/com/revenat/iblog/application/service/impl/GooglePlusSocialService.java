@@ -1,4 +1,4 @@
-package com.revenat.iblog.presentation.service.impl;
+package com.revenat.iblog.application.service.impl;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -11,9 +11,9 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.revenat.iblog.presentation.infra.exception.AuthenticationException;
-import com.revenat.iblog.presentation.model.SocialAccount;
-import com.revenat.iblog.presentation.service.SocialService;
+import com.revenat.iblog.application.domain.model.SocialAccount;
+import com.revenat.iblog.application.infra.exception.AuthenticationException;
+import com.revenat.iblog.application.service.SocialService;
 
 public class GooglePlusSocialService implements SocialService {
 	private final String googlePlusClientId;

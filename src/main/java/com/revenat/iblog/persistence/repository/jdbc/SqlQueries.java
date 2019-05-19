@@ -26,6 +26,8 @@ final class SqlQueries {
 			"SELECT count(*) AS count FROM article WHERE (title ILIKE ? OR content ILIKE ?) AND category_id = ?";
 	
 	public static final String GET_ACCOUNT_BY_ID = "SELECT * FROM account WHERE id = ?";
+	public static final String GET_ACCOUNT_BY_EMAIL = "SELECT * FROM account WHERE email = ?";
+	public static final String INSERT_INTO_ACCOUNT = "INSERT INTO account (email, name, avatar, created) VALUES (?,?,?,?)";
 	
 	public static final String GET_COMMENT_BY_ARTICLE_ID = 
 			"SELECT * FROM comment WHERE article_id = ? ORDER BY created DESC LIMIT ? OFFSET ?";
@@ -34,6 +36,8 @@ final class SqlQueries {
 			+ " FROM comment AS c INNER JOIN account AS a ON c.account_id = a.id"
 			+ " WHERE c.article_id = ? ORDER BY created DESC LIMIT ? OFFSET ?";
 	public static final String COUNT_COMMENTS_BY_ARTICLE = "SELECT count(*) AS count FROM comment WHERE article_id = ?";
+	public static final String INSERT_INTO_COMMENT = "INSERT INTO comment (account_id, article_id, content, created)"
+			+ " VALUES (?,?,?,?)";
 
 	private SqlQueries() {}
 }

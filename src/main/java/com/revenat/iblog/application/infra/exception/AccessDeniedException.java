@@ -1,4 +1,4 @@
-package com.revenat.iblog.presentation.infra.exception;
+package com.revenat.iblog.application.infra.exception;
 
 import com.revenat.iblog.application.infra.exception.base.ApplicationException;
 

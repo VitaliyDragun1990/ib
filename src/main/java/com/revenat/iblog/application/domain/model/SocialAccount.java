@@ -1,6 +1,4 @@
-package com.revenat.iblog.presentation.model;
-
-import com.revenat.iblog.application.domain.model.AbstractModel;
+package com.revenat.iblog.application.domain.model;
 
 /**
  * This component represents abstraction over user's account from some kind of social network.

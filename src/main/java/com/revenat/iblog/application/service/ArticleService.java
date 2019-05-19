@@ -1,6 +1,5 @@
 package com.revenat.iblog.application.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.revenat.iblog.application.domain.entity.Account;
@@ -148,16 +147,32 @@ public class ArticleService {
 		Checks.checkParam(pageSize >= 1, "page size can not be less that 1: %d", pageSize);
 		return commentRepo.getByArticle(articleId, offset, pageSize);
 	}
-	
-	public Comment addComment(long articleId, String content, String userEmail) {
+
+	/**
+	 * Adds new comment for {@link Article} denoted by {@code articleId}, with
+	 * specified {@code content} from specified {@code account}.
+	 * 
+	 * @param articleId id of the article for which new comment would be added
+	 * @param content   content of the comment
+	 * @param account   account of the user who made such comment
+	 * @return newly created comment
+	 */
+	public Comment addComment(long articleId, String content, Account account) {
 		Comment c = new Comment();
-		c.setId(0L);
 		c.setArticleId(articleId);
-		c.setContent("Test comment");
-		c.setCreated(LocalDateTime.now());
-		Account a = new Account();
-		a.setName("test_account");
-		c.setAccount(a);
+		c.setContent(content);
+		c.setAccount(account);
+		c = commentRepo.save(c);
+		
+		// No need to manually update article comments count because of the triggers on the
+		// database which do such worh automatically when new comment has been added.
+		/*
+		Article a = articleRepo.getById(articleId);
+		a.setNumberOfComments((int)commentRepo.getCountByArticle(articleId));
+		articleRepo.update(a);
+		*/
+		
+		// TODO: send notification about new comment has been created
 		return c;
 	}
 

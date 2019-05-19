@@ -5,4 +5,8 @@ import com.revenat.iblog.application.domain.entity.Account;
 public interface AccountRepository {
 
 	Account getById(long id);
+	
+	Account getByEmail(String email);
+	
+	Account save(Account account);
 }
