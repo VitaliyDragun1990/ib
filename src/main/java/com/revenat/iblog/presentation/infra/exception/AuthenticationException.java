@@ -1,4 +1,4 @@
-package com.revenat.iblog.application.infra.exception.security;
+package com.revenat.iblog.presentation.infra.exception;
 
 import com.revenat.iblog.application.infra.exception.base.ApplicationException;
 
@@ -14,5 +14,9 @@ public class AuthenticationException extends ApplicationException {
 
 	public AuthenticationException(String message, Throwable cause) {
 		super(message, cause, 401);
+	}
+
+	public AuthenticationException(String message) {
+		super(message, 401);
 	}
 }

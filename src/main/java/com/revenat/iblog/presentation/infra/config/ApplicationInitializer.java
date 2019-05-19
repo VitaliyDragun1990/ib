@@ -25,6 +25,11 @@ import com.revenat.iblog.presentation.filter.CategoriesLoaderFilter;
 import com.revenat.iblog.presentation.filter.ErrorHandlerFilter;
 import com.revenat.iblog.presentation.infra.config.Constants.URL;
 import com.revenat.iblog.presentation.listener.ApplicationListener;
+import com.revenat.iblog.presentation.service.AuthenticationService;
+import com.revenat.iblog.presentation.service.AvatarService;
+import com.revenat.iblog.presentation.service.SocialService;
+import com.revenat.iblog.presentation.service.impl.FileStorageAvatarService;
+import com.revenat.iblog.presentation.service.impl.GooglePlusSocialService;
 
 /**
  * This component creates and configures all servlets, filters, listeners on
@@ -39,6 +44,10 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 	public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
 		ctx.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
 		ServiceManager serviceManager = ServiceManager.getInstance();
+		SocialService socialService = new GooglePlusSocialService(
+				serviceManager.getApplicationProperty("social.googleplus.clientId"));
+		AvatarService avatarService = new FileStorageAvatarService(ctx.getRealPath("/"));
+		AuthenticationService authService = new AuthenticationService(socialService, avatarService);
 		
 		Dynamic servletReg = ctx.addServlet("NewsController", new NewsController(serviceManager.getArticleService()));
 		servletReg.addMapping(URL.NEWS);

@@ -14,9 +14,9 @@ import com.revenat.iblog.application.infra.exception.ResourceNotFoundException;
 import com.revenat.iblog.application.infra.exception.base.ApplicationException;
 import com.revenat.iblog.application.infra.exception.flow.FlowException;
 import com.revenat.iblog.application.infra.exception.flow.InvalidParameterException;
-import com.revenat.iblog.application.infra.exception.security.AccessDeniedException;
 import com.revenat.iblog.presentation.infra.config.Constants.Attribute;
 import com.revenat.iblog.presentation.infra.config.Constants.Page;
+import com.revenat.iblog.presentation.infra.exception.AccessDeniedException;
 import com.revenat.iblog.presentation.infra.util.RoutingUtils;
 import com.revenat.iblog.presentation.infra.util.UrlUtils;
 

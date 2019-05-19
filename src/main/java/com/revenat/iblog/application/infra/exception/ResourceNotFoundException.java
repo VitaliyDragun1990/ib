@@ -3,7 +3,7 @@ package com.revenat.iblog.application.infra.exception;
 import com.revenat.iblog.application.infra.exception.base.ApplicationException;
 
 /**
- * Signals thet requested resource can not be found.
+ * Signals that requested resource can not be found.
  * @author Vitaly Dragun
  *
  */
