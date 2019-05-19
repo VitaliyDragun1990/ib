@@ -6,8 +6,9 @@
 	<a class="logout hidden">Logout</a>
 </div>
 <div class="media-body">
-	<div class="form-group">
+	<div id="commentForm" class="form-group">
 		<textarea name="comment" id="commentText" rows="5" class="form-control" placeholder="Type a new comment"></textarea>
+		<span class="help-block hidden">Comment can not be empty</span>
 	</div>
 	<div class="btn-send-container">
 		<button id="sendComment" class="btn btn-primary pull-right">Send</button>

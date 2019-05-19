@@ -1,13 +1,7 @@
  // --------------------------- Google plus integration Start ---------------------------
     var googleProfile = null;
     
-    var sendComment = function() {
-		if (googleProfile == null) {
-			$('#signin-form').modal('show');
-		} else {
-			// TODO submit new comment logic
-		}
-	};
+    
 	
 	var gpLogout = function() {
 		var auth2 = gapi.auth2.getAuthInstance();

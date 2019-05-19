@@ -1,7 +1,9 @@
 package com.revenat.iblog.application.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.revenat.iblog.application.domain.entity.Account;
 import com.revenat.iblog.application.domain.entity.Article;
 import com.revenat.iblog.application.domain.entity.Category;
 import com.revenat.iblog.application.domain.entity.Comment;
@@ -145,6 +147,18 @@ public class ArticleService {
 		Checks.checkParam(offset >= 0, "offset can not be less that 0: %d", pageSize);
 		Checks.checkParam(pageSize >= 1, "page size can not be less that 1: %d", pageSize);
 		return commentRepo.getByArticle(articleId, offset, pageSize);
+	}
+	
+	public Comment addComment(long articleId, String content, String userEmail) {
+		Comment c = new Comment();
+		c.setId(0L);
+		c.setArticleId(articleId);
+		c.setContent("Test comment");
+		c.setCreated(LocalDateTime.now());
+		Account a = new Account();
+		a.setName("test_account");
+		c.setAccount(a);
+		return c;
 	}
 
 	private int calculateOffset(int pageNumber, int pageSize) {

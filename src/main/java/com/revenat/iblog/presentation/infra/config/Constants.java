@@ -63,7 +63,8 @@ public final class Constants {
 		public static final String ABOUT = "/about";
 		public static final String SEARCH = "/search";
 		public static final String ERROR = "/error";
-		public static final String AJAX_COMMENTS = "/ajax/comments";
+		public static final String AJAX_COMMENTS = "/ajax/html/comments";
+		public static final String AJAX_COMMENT = "/ajax/html/comment";
 
 		private URL() {
 		}
