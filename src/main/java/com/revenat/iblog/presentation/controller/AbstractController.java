@@ -12,6 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revenat.iblog.presentation.form.AbstractForm;
 import com.revenat.iblog.presentation.infra.util.RoutingUtils;
 
 public class AbstractController extends HttpServlet {
@@ -43,7 +44,7 @@ public class AbstractController extends HttpServlet {
 		return (pageNumber - 1) * pageSize;
 	}
 	
-	protected final <T> T createForm(HttpServletRequest req, Class<T> formClass) throws ServletException {
+	protected final <T extends AbstractForm> T createForm(HttpServletRequest req, Class<T> formClass) throws ServletException {
 		try {
 			T form = formClass.newInstance();
 			BeanUtils.populate(form, req.getParameterMap());

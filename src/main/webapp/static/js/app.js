@@ -86,7 +86,13 @@ $(function() {
 					}, 
 					success : function(data) {
 						$('#comments-container').prepend(data);
+						// Increment comments count of the current article
+						var commentCount = parseInt($('span.comment-count').text(), 10);
+						commentCount += 1;
+						$('span.comment-count').html(commentCount);
+						
 						convertLoaderSpinnerToButton(sendBtn, 'btn-primary', sendComment);
+						// add clicl listener to reply button on all comments again
 						$('.reply').on('click', function() {
 				    		reply($(this).attr('data-name'));
 				    	});

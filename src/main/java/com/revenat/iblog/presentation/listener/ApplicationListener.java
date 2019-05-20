@@ -6,7 +6,7 @@ import javax.servlet.ServletContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revenat.iblog.application.service.ServiceManager;
+import com.revenat.iblog.application.service.impl.ServiceManager;
 import com.revenat.iblog.presentation.infra.config.Constants.Attribute;
 
 public class ApplicationListener implements ServletContextListener {

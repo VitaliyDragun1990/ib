@@ -1,4 +1,4 @@
-package com.revenat.iblog.application.service;
+package com.revenat.iblog.application.service.impl;
 
 import java.sql.SQLException;
 import java.util.Properties;
@@ -7,8 +7,10 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revenat.iblog.application.service.impl.FileStorageAvatarService;
-import com.revenat.iblog.application.service.impl.GooglePlusSocialService;
+import com.revenat.iblog.application.service.ArticleService;
+import com.revenat.iblog.application.service.AuthenticationService;
+import com.revenat.iblog.application.service.CategoryService;
+import com.revenat.iblog.application.service.I18nService;
 import com.revenat.iblog.persistence.repository.CategoryRepository;
 import com.revenat.iblog.persistence.repository.RepositoryFactory;
 
@@ -22,6 +24,7 @@ public class ServiceManager {
 	private final CategoryService categoryService;
 	private final ArticleService articleService;
 	private final AuthenticationService authService;
+	private final I18nService i18nService;
 	
 	public CategoryService getCategoryService() {
 		return categoryService;
@@ -33,6 +36,10 @@ public class ServiceManager {
 	
 	public AuthenticationService getAuthService() {
 		return authService;
+	}
+	
+	public I18nService getI18nService() {
+		return i18nService;
 	}
 	
 	public static synchronized ServiceManager getInstance(String applicationRootPath) {
@@ -66,14 +73,15 @@ public class ServiceManager {
 				getApplicationProperty("db.pool.maxSize"));
 		RepositoryFactory repoFactory = new RepositoryFactory(dataSource);
 		CategoryRepository categoryRepository = repoFactory.createCategoryRepository();
-		categoryService = new CategoryService(categoryRepository);
-		articleService = new ArticleService(repoFactory.createArticleRepository(),
+		categoryService = new CategoryServiceImpl(categoryRepository);
+		articleService = new ArticleServiceImpl(repoFactory.createArticleRepository(),
 											categoryRepository,
 											repoFactory.createCommentRepository());
-		authService = new AuthenticationService(
+		authService = new SocialAccountAuthenticationService(
 				new GooglePlusSocialService(getApplicationProperty("social.googleplus.clientId")),
 				new FileStorageAvatarService(applicationRootPath),
 				repoFactory.createAccountRepository());
+		i18nService = new ResourceBundleI18nService(getApplicationProperty("i18n.bundle"));
 		
 		LOGGER.info("ServiceManager instance created");
 	}

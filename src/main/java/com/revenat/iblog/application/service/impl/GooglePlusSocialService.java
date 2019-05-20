@@ -15,7 +15,7 @@ import com.revenat.iblog.application.domain.model.SocialAccount;
 import com.revenat.iblog.application.infra.exception.AuthenticationException;
 import com.revenat.iblog.application.service.SocialService;
 
-public class GooglePlusSocialService implements SocialService {
+class GooglePlusSocialService implements SocialService {
 	private final String googlePlusClientId;
 	private final List<String> issuers;
 	

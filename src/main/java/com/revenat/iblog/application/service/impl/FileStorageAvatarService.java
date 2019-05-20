@@ -15,7 +15,7 @@ import com.revenat.iblog.application.service.AvatarService;
 
 import net.coobird.thumbnailator.Thumbnails;
 
-public class FileStorageAvatarService implements AvatarService {
+class FileStorageAvatarService implements AvatarService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileStorageAvatarService.class);
 	private final String mediaDirParent;
 	

@@ -30,6 +30,7 @@ public class NewCommentController extends AbstractController {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		CommentForm form = createForm(req, CommentForm.class);
+		form.validate();
 		Account account = authService.authenticate(form.getAuthToken());
 		Comment comment = 
 				articleService.addComment(form.getArticleId(), form.getContent(), account);

@@ -11,7 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 import javax.servlet.SessionTrackingMode;
 
-import com.revenat.iblog.application.service.ServiceManager;
+import com.revenat.iblog.application.service.impl.ServiceManager;
 import com.revenat.iblog.presentation.controller.ajax.MoreCommentsController;
 import com.revenat.iblog.presentation.controller.ajax.NewCommentController;
 import com.revenat.iblog.presentation.controller.page.AboutController;

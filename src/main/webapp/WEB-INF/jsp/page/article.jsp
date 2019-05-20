@@ -21,7 +21,8 @@
 				<i class="fa fa-folder" aria-hidden="true"></i> ${category.name}
 			</a></li>
 			<li><a href="#" class="no-link">
-				<i class="fa fa-comments" aria-hidden="true"></i><fmt:formatNumber value="${article.numberOfComments}"/> comments
+				<i class="fa fa-comments" aria-hidden="true"></i>
+				<span class="comment-count"><fmt:formatNumber value="${article.numberOfComments}"/></span> comments
 			</a></li>
 			<li><a href="#" class="no-link">
 				<i class="fa fa-clock-o" aria-hidden="true"></i>

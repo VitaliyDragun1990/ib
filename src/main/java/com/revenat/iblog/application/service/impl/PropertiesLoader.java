@@ -1,4 +1,4 @@
-package com.revenat.iblog.application.service;
+package com.revenat.iblog.application.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,7 +18,7 @@ import com.revenat.iblog.application.infra.util.Checks;
  * @author Vitaly Dragun
  *
  */
-public class PropertiesLoader {
+class PropertiesLoader {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesLoader.class);
 
 	private final Function<String, InputStream> resourceInputStreamBuilder;

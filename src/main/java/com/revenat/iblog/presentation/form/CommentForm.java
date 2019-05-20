@@ -1,6 +1,10 @@
 package com.revenat.iblog.presentation.form;
 
-public class CommentForm {
+import org.apache.commons.lang3.StringUtils;
+
+import com.revenat.iblog.presentation.infra.exception.InputValidationException;
+
+public class CommentForm extends AbstractForm {
 	private Long articleId;
 	private String content;
 	private String authToken;
@@ -27,5 +31,18 @@ public class CommentForm {
 
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
+	}
+	
+	@Override
+	public void validate() throws InputValidationException {
+		if (articleId == null) {
+			throw new InputValidationException("articleId is required");
+		}
+		if (StringUtils.isBlank(content)) {
+			throw new InputValidationException("content is required");
+		}
+		if (StringUtils.isBlank(authToken)) {
+			throw new InputValidationException("authToken is required");
+		}
 	}
 }
