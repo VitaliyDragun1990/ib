@@ -11,6 +11,7 @@ import com.revenat.iblog.application.service.ArticleService;
 import com.revenat.iblog.application.service.AuthenticationService;
 import com.revenat.iblog.application.service.CategoryService;
 import com.revenat.iblog.application.service.I18nService;
+import com.revenat.iblog.application.service.NotificationService;
 import com.revenat.iblog.persistence.repository.CategoryRepository;
 import com.revenat.iblog.persistence.repository.RepositoryFactory;
 
@@ -25,6 +26,7 @@ public class ServiceManager {
 	private final ArticleService articleService;
 	private final AuthenticationService authService;
 	private final I18nService i18nService;
+	private final NotificationService notificationService;
 	
 	public CategoryService getCategoryService() {
 		return categoryService;
@@ -42,6 +44,10 @@ public class ServiceManager {
 		return i18nService;
 	}
 	
+	public NotificationService getNotificationService() {
+		return notificationService;
+	}
+	
 	public static synchronized ServiceManager getInstance(String applicationRootPath) {
 		if (instance == null) {
 			instance = new ServiceManager(applicationRootPath);
@@ -50,12 +56,18 @@ public class ServiceManager {
 	}
 	
 	public String getApplicationProperty(String propertyName) {
-		return applicationProperties.getProperty(propertyName);
+		String value = applicationProperties.getProperty(propertyName);
+		if (value.startsWith("${sysEnv.")) {
+			value = value.replace("${sysEnv.", "").replace("}", "");
+			return System.getenv(value);
+		}
+		return value;
 	}
 	
 	public void close() {
 		try {
 			dataSource.close();
+			notificationService.shutdown();
 		} catch (SQLException e) {
 			LOGGER.warn("Error while closing datasource: " + e.getMessage(), e);
 		}
@@ -74,18 +86,31 @@ public class ServiceManager {
 		RepositoryFactory repoFactory = new RepositoryFactory(dataSource);
 		CategoryRepository categoryRepository = repoFactory.createCategoryRepository();
 		categoryService = new CategoryServiceImpl(categoryRepository);
+		notificationService = new AsyncEmailNotificationService(buildEmailData());
+		i18nService = new ResourceBundleI18nService(getApplicationProperty("i18n.bundle"));
 		articleService = new ArticleServiceImpl(repoFactory.createArticleRepository(),
-											categoryRepository,
-											repoFactory.createCommentRepository());
+												categoryRepository,
+												repoFactory.createCommentRepository(),
+												notificationService,
+												i18nService);
 		authService = new SocialAccountAuthenticationService(
 				new GooglePlusSocialService(getApplicationProperty("social.googleplus.clientId")),
 				new FileStorageAvatarService(applicationRootPath),
 				repoFactory.createAccountRepository());
-		i18nService = new ResourceBundleI18nService(getApplicationProperty("i18n.bundle"));
 		
 		LOGGER.info("ServiceManager instance created");
 	}
 	
+	private EmailData buildEmailData() {
+		return new EmailData(getApplicationProperty("email.notificationEmail"),
+							 getApplicationProperty("email.fromEmail"),
+							 Integer.parseInt(getApplicationProperty("email.sendTryAttempts")),
+							 getApplicationProperty("email.smtp.server"),
+							 getApplicationProperty("email.smtp.port"),
+							 getApplicationProperty("email.smtp.username"),
+							 getApplicationProperty("email.smtp.password"));
+	}
+
 	private Properties loadApplicationProperties() {
 		return new PropertiesLoader().load(APPLICATION_PROPERTIES);
 	}

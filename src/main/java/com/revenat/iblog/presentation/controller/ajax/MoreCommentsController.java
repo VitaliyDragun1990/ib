@@ -27,7 +27,7 @@ public class MoreCommentsController extends AbstractController {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int offset = getOffset(req);
 		long articleId = Long.parseLong(req.getParameter("articleId"));
-		List<Comment> comments = articleService.loadComments(articleId, offset, Constants.MAX_COMMENTS_PER_PAGE);
+		List<Comment> comments = articleService.loadCommentsForArticle(articleId, offset, Constants.MAX_COMMENTS_PER_PAGE);
 		
 		req.setAttribute(Attribute.COMMENTS, comments);
 		forwardToFragment(Fragment.COMMENTS, req, resp);

@@ -42,8 +42,8 @@ public class ArticleController extends AbstractController {
 		if (!getArticleUrl(requestUri).equals(article.getUrl())) {
 			redirect(getArticleLink(article), resp);
 		} else {
-			articleService.incrementArticleViewCount(article);
-			List<Comment> comments = articleService.loadComments(article.getId(), 0, Constants.MAX_COMMENTS_PER_PAGE);
+			article = articleService.incrementArticleViewCount(article.getId());
+			List<Comment> comments = articleService.loadCommentsForArticle(article.getId(), 0, Constants.MAX_COMMENTS_PER_PAGE);
 			
 			req.setAttribute(Attribute.ARTICLE, article);
 			req.setAttribute(Attribute.COMMENTS, comments);

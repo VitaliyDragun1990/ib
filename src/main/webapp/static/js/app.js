@@ -89,10 +89,10 @@ $(function() {
 						// Increment comments count of the current article
 						var commentCount = parseInt($('span.comment-count').text(), 10);
 						commentCount += 1;
-						$('span.comment-count').html(commentCount);
+						$('span.comment-count').html(commentCount.toLocaleString());
 						
 						convertLoaderSpinnerToButton(sendBtn, 'btn-primary', sendComment);
-						// add clicl listener to reply button on all comments again
+						// add click listener to reply button on all comments again
 						$('.reply').on('click', function() {
 				    		reply($(this).attr('data-name'));
 				    	});

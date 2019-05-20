@@ -1,6 +1,7 @@
 package com.revenat.iblog.application.service.impl;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.revenat.iblog.application.domain.entity.Account;
 import com.revenat.iblog.application.domain.entity.Article;
@@ -10,6 +11,8 @@ import com.revenat.iblog.application.domain.model.Items;
 import com.revenat.iblog.application.domain.search.criteria.ArticleCriteria;
 import com.revenat.iblog.application.infra.util.Checks;
 import com.revenat.iblog.application.service.ArticleService;
+import com.revenat.iblog.application.service.I18nService;
+import com.revenat.iblog.application.service.NotificationService;
 import com.revenat.iblog.persistence.repository.ArticleRepository;
 import com.revenat.iblog.persistence.repository.CategoryRepository;
 import com.revenat.iblog.persistence.repository.CommentRepository;
@@ -24,12 +27,17 @@ class ArticleServiceImpl implements ArticleService {
 	private final ArticleRepository articleRepo;
 	private final CategoryRepository categoryRepo;
 	private final CommentRepository commentRepo;
+	private final NotificationService notificationService;
+	private final I18nService i18nService;
 
 	public ArticleServiceImpl(ArticleRepository articleRepo, CategoryRepository categoryRepo,
-			CommentRepository commentRepo) {
+			CommentRepository commentRepo, NotificationService notificationService,
+			I18nService i18nService) {
 		this.articleRepo = articleRepo;
 		this.categoryRepo = categoryRepo;
 		this.commentRepo = commentRepo;
+		this.notificationService = notificationService;
+		this.i18nService = i18nService;
 	}
 
 	@Override
@@ -83,36 +91,45 @@ class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public void incrementArticleViewCount(Article article) {
-		article.setNumberOfViews(article.getNumberOfViews() + 1);
-		articleRepo.update(article);
+	public Article incrementArticleViewCount(long articleId) {
+		Article a = articleRepo.getById(articleId);
+		a.setNumberOfViews(a.getNumberOfViews() + 1);
+		articleRepo.update(a);
+		return a;
 	}
 
 	@Override
-	public List<Comment> loadComments(long articleId, int offset, int pageSize) {
+	public List<Comment> loadCommentsForArticle(long articleId, int offset, int pageSize) {
 		Checks.checkParam(offset >= 0, "offset can not be less that 0: %d", pageSize);
 		Checks.checkParam(pageSize >= 1, "page size can not be less that 1: %d", pageSize);
 		return commentRepo.getByArticle(articleId, offset, pageSize);
 	}
 
 	@Override
-	public Comment addComment(long articleId, String content, Account account) {
+	public Comment addCommentToArticle(long articleId, String content, Account account, String articleUri, Locale locale) {
 		Comment c = new Comment();
 		c.setArticleId(articleId);
 		c.setContent(content);
 		c.setAccount(account);
 		c = commentRepo.save(c);
 		
-		// No need to manually update article comments count because of the triggers on the
-		// database which do such worh automatically when new comment has been added.
-		/*
-		Article a = articleRepo.getById(articleId);
-		a.setNumberOfComments((int)commentRepo.getCountByArticle(articleId));
-		articleRepo.update(a);
+		/* No need to manually update article comments count because of the triggers on the
+		 * database which do such worh automatically when new comment has been added.
+		 *
+		 * Article a = articleRepo.getById(articleId);
+		 * a.setNumberOfComments((int)commentRepo.getCountByArticle(articleId));
+		 * articleRepo.update(a);
 		*/
 		
-		// TODO: send notification about new comment has been created
+		sendNewCommentNotification(articleRepo.getById(articleId), content, articleUri, locale);
 		return c;
+	}
+
+	private void sendNewCommentNotification(Article article, String commentContent, String articleUri, Locale locale) {
+		String title = i18nService.getMessage("notification.newComment.title", locale, article.getTitle());
+		String content = i18nService.getMessage("notification.newComment.content", locale, article.getTitle(), articleUri,
+				commentContent);
+		notificationService.sendNotification(title, content);
 	}
 
 	private int calculateOffset(int pageNumber, int pageSize) {

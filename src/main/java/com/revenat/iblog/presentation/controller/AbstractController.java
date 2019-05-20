@@ -47,6 +47,7 @@ public class AbstractController extends HttpServlet {
 	protected final <T extends AbstractForm> T createForm(HttpServletRequest req, Class<T> formClass) throws ServletException {
 		try {
 			T form = formClass.newInstance();
+			form.setLocale(req.getLocale());
 			BeanUtils.populate(form, req.getParameterMap());
 			return form;
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {

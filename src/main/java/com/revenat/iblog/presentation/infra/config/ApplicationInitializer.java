@@ -68,7 +68,7 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		servletReg.addMapping(URL.AJAX_COMMENTS);
 		
 		servletReg = ctx.addServlet("NewCommentController", new NewCommentController(serviceManager.getArticleService(),
-				serviceManager.getAuthService()));
+				serviceManager.getAuthService(), serviceManager.getApplicationProperty("app.host")));
 		servletReg.addMapping(URL.AJAX_COMMENT);
 		
 		FilterRegistration.Dynamic filterReg = ctx.addFilter("ErrorHandlerFilter", new ErrorHandlerFilter());

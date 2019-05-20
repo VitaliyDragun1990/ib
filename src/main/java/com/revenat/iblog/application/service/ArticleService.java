@@ -1,6 +1,7 @@
 package com.revenat.iblog.application.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import com.revenat.iblog.application.domain.entity.Account;
 import com.revenat.iblog.application.domain.entity.Article;
@@ -67,8 +68,9 @@ public interface ArticleService {
 	/**
 	 * Increments {@link Article#getNumberOfViews()} attribute by {@code 1} and
 	 * persist such change to the datastore.
+	 * @return article with incremented view count
 	 */
-	void incrementArticleViewCount(Article article);
+	Article incrementArticleViewCount(long articleId);
 
 	/**
 	 * Loads more {@link Comment}s for {@link Article} denoted by specified
@@ -80,17 +82,19 @@ public interface ArticleService {
 	 * @return list with comments for specified article, or empty one if no comments
 	 *         were found.
 	 */
-	List<Comment> loadComments(long articleId, int offset, int pageSize);
+	List<Comment> loadCommentsForArticle(long articleId, int offset, int pageSize);
 
 	/**
 	 * Adds new comment for {@link Article} denoted by {@code articleId}, with
-	 * specified {@code content} from specified {@code account}.
+	 * specified {@code content} from specified {@code account}. Also sends notification
+	 * to the owner of the blog about new comment has been added.l
 	 * 
-	 * @param articleId id of the article for which new comment would be added
+	 * @param articleId id of the article to which new comment would be added
 	 * @param content   content of the comment
 	 * @param account   account of the user who made such comment
+	 * @param articleUri URI for the article for which comment is to be added
 	 * @return newly created comment
 	 */
-	Comment addComment(long articleId, String content, Account account);
+	Comment addCommentToArticle(long articleId, String content, Account account, String articleUri, Locale locale);
 
 }
