@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="custom" uri="/WEB-INF/tld/custom.tld"%>
 
 <c:set var="noAvatar" value="/static/img/no_avatar.png"/>
 <c:forEach var="comment" items="${comments}">
@@ -17,7 +18,7 @@
 				<small class="date">
 					<fmt:parseDate value="${comment.created}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
 					<fmt:formatDate dateStyle="MEDIUM" timeStyle="SHORT" type="both" value="${parsedDateTime}" />
-				</small> | <a class="reply" data-name="${account.name}">Reply</a>
+				</small> | <a class="reply" data-name="${account.name}"><custom:message key="app.comments.reply"/></a>
 			</p>
 		</div>
 	</div>

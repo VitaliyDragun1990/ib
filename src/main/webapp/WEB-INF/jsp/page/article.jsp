@@ -2,8 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="custom" uri="/WEB-INF/tld/custom.tld" %>
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5ce4235e7370d45c"></script>
+
 
 <article class="panel panel-default">
 	<c:set var="category" value="${CATEGORY_MAP[article.categoryId]}" />
@@ -22,7 +26,7 @@
 			</a></li>
 			<li><a href="#" class="no-link">
 				<i class="fa fa-comments" aria-hidden="true"></i>
-				<span class="comment-count"><fmt:formatNumber value="${article.numberOfComments}"/></span> comments
+				<custom:message key="app.article.comments"/>&nbsp;<span class="comment-count"><fmt:formatNumber value="${article.numberOfComments}"/></span>
 			</a></li>
 			<li><a href="#" class="no-link">
 				<i class="fa fa-clock-o" aria-hidden="true"></i>
@@ -30,7 +34,8 @@
 				<fmt:formatDate dateStyle="FULL" timeStyle="SHORT" type="both" value="${parsedDateTime}" />
 			</a></li>
 			<li><a href="#" class="no-link">
-				<i class="fa fa-eye" aria-hidden="true"></i> Hits: <fmt:formatNumber value="${article.numberOfViews}" />
+				<i class="fa fa-eye" aria-hidden="true"></i>
+					<custom:message key="app.article.hits"/>&nbsp;<fmt:formatNumber value="${article.numberOfViews}" />
 			</a></li>
 		</ul>
 
@@ -38,14 +43,7 @@
 		
 		<!-- Social networkd links -->
 		<div class="social hidden-print">
-			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-			<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-			<a href="#"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a>
-			<a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
-			<a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-			<a href="#"><i class="fa fa-vk" aria-hidden="true"></i></a>
-			<a href="#"><i class="fa fa-reddit" aria-hidden="true"></i></a>
-			<a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+			<div class="addthis_inline_share_toolbox"></div>
 		</div>
 		<hr>
 		
@@ -63,7 +61,7 @@
 			<div class="hidden-print">
 				<!-- Load more comments button  -->
 				<a id="loadMore" class="btn btn-info btn-block ${article.numberOfComments > fn:length(comments) ? '' : 'hidden'}">
-					Load more
+					<custom:message key="app.button.loadMore"/>
 				</a>
 				<img src='<c:url value="/static/img/loading.gif" />' alt="Loading" id="loadIndicator" class="hidden center-block">
 			</div>

@@ -1,9 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="custom" uri="/WEB-INF/tld/custom.tld" %>
 
 <div class="panel panel-default">
 	<div class="panel-body text-justify">
-		<h2 class="text-center">Contact form</h2>
+		<h2 class="text-center"><custom:message key="app.contact.header"/></h2>
 		<hr>
 
 		<div class="row">
@@ -11,26 +12,26 @@
 				<form id="contactForm" action='<c:url value="/contact" />' method="post">
 					<c:if test="${success}">
 						<div class="alert alert-success">
-  							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Your request has been sent. Thank your for your message.
+  							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <custom:message key="app.contact.successMessage"/>
 						</div>
 					</c:if>
 					<div class="alert alert-danger hidden">
-  						<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> There are some errors in your form.
+  						<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> <custom:message key="app.contact.failureMessage"/>
 					</div>
 					<div class="form-group name">
-						<input class="form-control" name="name" type="text" placeholder="Your name">
-						<span class="help-block hidden">Name is required.</span>
+						<input class="form-control" name="name" type="text" placeholder='<custom:message key="app.placeholder.name"/>'>
+						<span class="help-block hidden"><custom:message key="app.contact.message.name"/></span>
 					</div>
 					<div class="form-group email">
-						<input class="form-control" name="email" type="email" placeholder="Your email">
-						<span class="help-block hidden">Email is invalid.</span>
+						<input class="form-control" name="email" type="email" placeholder='<custom:message key="app.placeholder.email"/>'>
+						<span class="help-block hidden"><custom:message key="app.contact.message.email"/></span>
 					</div>
 					<div class="form-group message">
-						<textarea name="message" cols="30" class="form-control" placeholder="Your message"></textarea>
-						<span class="help-block hidden">Message is required.</span>
+						<textarea name="message" cols="30" class="form-control" placeholder='<custom:message key="app.placeholder.msg"/>'></textarea>
+						<span class="help-block hidden"><custom:message key="app.contact.message.text"/></span>
 					</div>
 					<div class="form-group">
-						<button class="btn btn-default" type="submit">Submit</button>
+						<button class="btn btn-default" type="submit"><custom:message key="app.button.submit"/></button>
 					</div>
 				</form>
 			</div>

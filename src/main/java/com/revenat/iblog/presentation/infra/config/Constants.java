@@ -23,6 +23,8 @@ public final class Constants {
 		public static final String SOCIAL_GOOGLEPLUS_CLIENT_ID = "social_googleplus_clientId";
 		public static final String CONTACT_REQUEST_SUCCESS = "CONTACT_REQUEST_SUCCESS";
 		public static final String SUCCESS = "success";
+		public static final String I18N = "I18N";
+		public static final String USER_LOCALE = "userLocale";
 
 		private Attribute() {
 		}

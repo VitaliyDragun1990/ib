@@ -21,14 +21,14 @@
 					${category.name}
 				</a></li>
 				<li><a href="#" class="no-link"><i class="fa fa-comments" aria-hidden="true"></i>
-					<fmt:formatNumber value="${article.numberOfComments}" /> comments
+					<custom:message key="app.article.comments"/>&nbsp;<fmt:formatNumber value="${article.numberOfComments}" />
 				</a></li>
 				<li><a href="#" class="no-link"><i class="fa fa-clock-o" aria-hidden="true"></i>
 					<fmt:parseDate value="${article.created}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
 					<fmt:formatDate dateStyle="FULL" timeStyle="SHORT" type="both" value="${parsedDateTime}" />
 				</a></li>
 				<li><a href="#" class="no-link"><i class="fa fa-eye" aria-hidden="true"></i>
-					Hits: <fmt:formatNumber value="${article.numberOfViews}" />
+					<custom:message key="app.article.hits"/>&nbsp;<fmt:formatNumber value="${article.numberOfViews}" />
 				</a></li>
 			</ul>
 

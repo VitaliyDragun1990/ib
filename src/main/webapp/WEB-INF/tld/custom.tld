@@ -3,7 +3,7 @@
 	<tlib-version>1.0</tlib-version>
 	<jsp-version>2.3</jsp-version>
 	<shortname>custom</shortname>
-	
+
 	<tag>
 		<name>trim</name>
 		<tag-class>com.revenat.iblog.presentation.tag.TrimmerTag</tag-class>
@@ -21,9 +21,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	
 	<tag>
 		<name>encoder</name>
-		<tag-class>com.revenat.iblog.presentation.tag.UrlEncoderTag</tag-class>
+		<tag-class>com.revenat.iblog.presentation.tag.UrlEncoderTag
+		</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>url</name>
@@ -32,4 +34,35 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	
+	<tag>
+		<name>message</name>
+		<tag-class>com.revenat.iblog.presentation.tag.MessageLocalizationTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>key</name>
+			<required>true</required>
+			<type>java.lang.String</type>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>locale</name>
+			<required>false</required>
+			<type>java.util.Locale</type>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>lang</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>args</name>
+			<required>false</required>
+			<type>java.lang.String</type>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
 </taglib>

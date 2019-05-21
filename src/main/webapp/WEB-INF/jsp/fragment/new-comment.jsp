@@ -1,17 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="custom" uri="/WEB-INF/tld/custom.tld"%>
 
 <div class="media-left">
 	<img class="avatar img-rounded" src='<c:url value="/static/img/no_avatar.png" />' alt="no avatar" class="media-object img-rounded">
-	<a class="logout hidden">Logout</a>
+	<a class="logout hidden"><custom:message key="app.button.logout"/></a>
 </div>
 <div class="media-body">
 	<div id="commentForm" class="form-group">
-		<textarea name="comment" id="commentText" rows="5" class="form-control" placeholder="Type a new comment"></textarea>
-		<span class="help-block hidden">Comment can not be empty</span>
+		<textarea name="comment" id="commentText" rows="5" class="form-control" placeholder='<custom:message key="app.placeholder.comment"/>'></textarea>
+		<span class="help-block hidden"><custom:message key="app.newComment.message.comment"/></span>
 	</div>
 	<div class="btn-send-container">
-		<button id="sendComment" class="btn btn-primary pull-right">Send</button>
+		<button id="sendComment" class="btn btn-primary pull-right"><custom:message key="app.button.send"/></button>
 	</div>
 </div>
 
@@ -20,7 +21,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title text-center">You should login before leaving comments </h4>
+        <h4 class="modal-title text-center"><custom:message key="app.newComment.message.login"/></h4>
       </div>
       <div class="modal-body">
       	<div class="row">

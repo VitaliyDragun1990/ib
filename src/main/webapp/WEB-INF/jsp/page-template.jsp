@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="custom" uri="/WEB-INF/tld/custom.tld" %>
 
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="google-signin-scope" content="profile email">
 <meta name="google-signin-client_id" content="${social_googleplus_clientId}">
-<title>Blog demo</title>
+<title><custom:message key="app.title"/></title>
 <link href='<c:url value="/static/css/bootstrap.css" />' rel="stylesheet">
 <link href='<c:url value="/static/css/bootstrap-theme.css" />' rel="stylesheet">
 <link href='<c:url value="/static/css/font-awesome.css" />' rel="stylesheet">

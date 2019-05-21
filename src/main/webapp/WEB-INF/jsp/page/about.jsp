@@ -1,8 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="custom" uri="/WEB-INF/tld/custom.tld" %>
 
 <div class="panel panel-default">
 	<div class="panel-body text-justify">
-		<h2>About this blog</h2>
+		<h2><custom:message key="app.about.header"/></h2>
 		<p>Nullam accumsan lorem in dui. Praesent congue erat at massa. Praesent metus tellus, elementum eu, semper a, adipiscing nec, purus.
 			Sed aliquam ultrices mauris. Aenean imperdiet. Phasellus viverra nulla ut metus varius laoreet. Maecenas malesuada. Suspendisse enim
 			turpis, dictum sed, iaculis a, condimentum nec, nisi. Cras ultricies mi eu turpis hendrerit fringilla. Mauris turpis nunc, blandit et,

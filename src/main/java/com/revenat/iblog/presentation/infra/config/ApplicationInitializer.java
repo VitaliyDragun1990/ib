@@ -23,6 +23,7 @@ import com.revenat.iblog.presentation.controller.page.NewsController;
 import com.revenat.iblog.presentation.controller.page.SearchController;
 import com.revenat.iblog.presentation.filter.CategoriesLoaderFilter;
 import com.revenat.iblog.presentation.filter.ErrorHandlerFilter;
+import com.revenat.iblog.presentation.infra.config.Constants.Attribute;
 import com.revenat.iblog.presentation.infra.config.Constants.URL;
 import com.revenat.iblog.presentation.listener.ApplicationListener;
 
@@ -39,6 +40,7 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 	public void onStartup(Set<Class<?>> c, ServletContext ctx) throws ServletException {
 		ctx.setSessionTrackingModes(EnumSet.of(SessionTrackingMode.COOKIE));
 		ServiceManager serviceManager = ServiceManager.getInstance(ctx.getRealPath("/"));
+		ctx.setAttribute(Attribute.I18N, serviceManager.getI18nService());
 		
 		Dynamic servletReg = ctx.addServlet("NewsController", new NewsController(serviceManager.getArticleService()));
 		servletReg.addMapping(URL.NEWS);
