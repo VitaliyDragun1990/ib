@@ -25,6 +25,7 @@
 		<commons-beanutils.version>1.9.3</commons-beanutils.version>
 		<commons-email.version>1.5</commons-email.version>
 		<javax.mail.version>1.6.2</javax.mail.version>
+		<commons-validator.version>1.6</commons-validator.version>
 		<junit.version>4.12</junit.version>
 		<mockito.version>2.13.0</mockito.version>
 		<hamcrest.version>2.1</hamcrest.version>
@@ -120,6 +121,12 @@
 			<artifactId>javax.mail</artifactId>
 			<version>${javax.mail.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+			<version>${commons-validator.version}</version>
+		</dependency>
+
 
 
 

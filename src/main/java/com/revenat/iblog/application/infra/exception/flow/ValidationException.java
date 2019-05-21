@@ -11,6 +11,10 @@ public class ValidationException extends FlowException {
 	private static final long serialVersionUID = 6176636234085711406L;
 
 	public ValidationException(String message) {
-		super(message, 400);
+		super(message, 500);
+	}
+
+	public ValidationException(String message, Throwable cause) {
+		super(message, cause);
 	}
 }

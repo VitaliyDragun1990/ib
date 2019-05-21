@@ -1,12 +1,11 @@
 package com.revenat.iblog.application.service;
 
 import java.util.List;
-import java.util.Locale;
 
-import com.revenat.iblog.application.domain.entity.Account;
 import com.revenat.iblog.application.domain.entity.Article;
 import com.revenat.iblog.application.domain.entity.Category;
 import com.revenat.iblog.application.domain.entity.Comment;
+import com.revenat.iblog.application.domain.form.CommentForm;
 import com.revenat.iblog.application.domain.model.Items;
 import com.revenat.iblog.application.infra.exception.ResourceNotFoundException;
 
@@ -68,6 +67,7 @@ public interface ArticleService {
 	/**
 	 * Increments {@link Article#getNumberOfViews()} attribute by {@code 1} and
 	 * persist such change to the datastore.
+	 * 
 	 * @return article with incremented view count
 	 */
 	Article incrementArticleViewCount(long articleId);
@@ -85,16 +85,11 @@ public interface ArticleService {
 	List<Comment> loadCommentsForArticle(long articleId, int offset, int pageSize);
 
 	/**
-	 * Adds new comment for {@link Article} denoted by {@code articleId}, with
-	 * specified {@code content} from specified {@code account}. Also sends notification
-	 * to the owner of the blog about new comment has been added.l
+	 * Adds new comment for particular article.
 	 * 
-	 * @param articleId id of the article to which new comment would be added
-	 * @param content   content of the comment
-	 * @param account   account of the user who made such comment
-	 * @param articleUri URI for the article for which comment is to be added
+	 * @param form contains information about comment to be created
 	 * @return newly created comment
 	 */
-	Comment addCommentToArticle(long articleId, String content, Account account, String articleUri, Locale locale);
+	Comment addCommentToArticle(CommentForm form, String articleUri);
 
 }

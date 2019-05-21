@@ -7,7 +7,63 @@ $(function() {
     	});
     	$('#sendComment').on('click', sendComment);
     	$('.logout').on('click', gpLogout);
+    	$('#contactForm').on('submit', contact);
     };
+    
+    var contact = function(event) {
+    	var name = $('input[name="name"]').val();
+    	var email = $('input[name="email"]').val();
+    	var message = $('textarea[name="message"]').val();
+    	var valid = true;
+    	
+    	if (!validateName(name)) {
+    		valid = false;
+    		$('.form-group.name').addClass('has-error');
+    		$('.form-group.name .help-block').removeClass('hidden');
+    	} else {
+    		$('.form-group.name').removeClass('has-error');
+    		$('.form-group.name .help-block').addClass('hidden');
+    	}
+    	
+    	if (!validateEmail(email)) {
+    		valid = false;
+    		$('.form-group.email').addClass('has-error');
+    		$('.form-group.email .help-block').removeClass('hidden');
+		} else {
+			$('.form-group.email').removeClass('has-error');
+    		$('.form-group.email .help-block').addClass('hidden');
+		}
+    	
+    	if (!validateMessage(message)) {
+    		valid = false;
+    		$('.form-group.message').addClass('has-error');
+    		$('.form-group.message .help-block').removeClass('hidden');
+		} else {
+			$('.form-group.message').removeClass('has-error');
+    		$('.form-group.message .help-block').addClass('hidden');
+		}
+    	
+    	if (valid) {
+			$('#contactForm .alert').addClass('hidden');
+		} else {
+			$('#contactForm .alert').removeClass('hidden');
+		}
+    	
+    	return valid;
+    }
+    
+    var validateEmail = function(email) {
+    	 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    	 return re.test(email);
+    }
+    
+    var validateName = function(name) {
+    	return name.trim() !='';
+    }
+    
+    var validateMessage = function(msg) {
+    	return msg.trim() !='';
+    }
     
 
     /*
@@ -63,6 +119,9 @@ $(function() {
     	}, 2000);
     };
     
+    /**
+     * This function is responsible for handling 'send new comment' form submition.
+     */
     var sendComment = function() {
 		if (googleProfile == null) {
 			$('#signin-form').modal('show');
@@ -121,7 +180,7 @@ $(function() {
 			btn.off('click');
 		};
 		
-		var convertLoaderSpinnerToButton = function(btn, btnClass, actionClick) {
+	var convertLoaderSpinnerToButton = function(btn, btnClass, actionClick) {
 			btn.removeClass('load-indicator');
 			btn.addClass('btn');
 			btn.addClass(btnClass);

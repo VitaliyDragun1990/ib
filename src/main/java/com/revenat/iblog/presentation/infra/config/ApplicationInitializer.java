@@ -51,7 +51,7 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		servletReg.addMapping(URL.ARTICLE);
 		
 		
-		servletReg = ctx.addServlet("ContactController", new ContactController());
+		servletReg = ctx.addServlet("ContactController", new ContactController(serviceManager.getContactService()));
 		servletReg.addMapping(URL.CONTACT);
 		
 		servletReg = ctx.addServlet("AboutController", new AboutController());
@@ -68,7 +68,7 @@ public class ApplicationInitializer implements ServletContainerInitializer {
 		servletReg.addMapping(URL.AJAX_COMMENTS);
 		
 		servletReg = ctx.addServlet("NewCommentController", new NewCommentController(serviceManager.getArticleService(),
-				serviceManager.getAuthService(), serviceManager.getApplicationProperty("app.host")));
+				serviceManager.getApplicationProperty("app.host")));
 		servletReg.addMapping(URL.AJAX_COMMENT);
 		
 		FilterRegistration.Dynamic filterReg = ctx.addFilter("ErrorHandlerFilter", new ErrorHandlerFilter());

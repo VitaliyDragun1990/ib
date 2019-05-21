@@ -1,9 +1,15 @@
-package com.revenat.iblog.presentation.form;
+package com.revenat.iblog.application.domain.form;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.revenat.iblog.presentation.infra.exception.InputValidationException;
+import com.revenat.iblog.application.infra.exception.flow.InvalidParameterException;
 
+/**
+ * Component that contains information about comment to be created.
+ * 
+ * @author Vitaly Dragun
+ *
+ */
 public class CommentForm extends AbstractForm {
 	private Long articleId;
 	private String content;
@@ -32,17 +38,17 @@ public class CommentForm extends AbstractForm {
 	public void setAuthToken(String authToken) {
 		this.authToken = authToken;
 	}
-	
+
 	@Override
-	public void validate() throws InputValidationException {
+	public void validate() throws InvalidParameterException {
 		if (articleId == null) {
-			throw new InputValidationException("articleId is required");
+			throw new InvalidParameterException("articleId is required");
 		}
 		if (StringUtils.isBlank(content)) {
-			throw new InputValidationException("content is required");
+			throw new InvalidParameterException("content is required");
 		}
 		if (StringUtils.isBlank(authToken)) {
-			throw new InputValidationException("authToken is required");
+			throw new InvalidParameterException("authToken is required");
 		}
 	}
 }

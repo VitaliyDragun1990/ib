@@ -21,6 +21,8 @@ public final class Constants {
 		public static final String IS_NEWS_PAGE = "isNewsPage";
 		public static final String COMMENTS = "comments";
 		public static final String SOCIAL_GOOGLEPLUS_CLIENT_ID = "social_googleplus_clientId";
+		public static final String CONTACT_REQUEST_SUCCESS = "CONTACT_REQUEST_SUCCESS";
+		public static final String SUCCESS = "success";
 
 		private Attribute() {
 		}

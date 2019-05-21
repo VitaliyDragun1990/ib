@@ -7,10 +7,12 @@ import com.revenat.iblog.application.domain.entity.Account;
 import com.revenat.iblog.application.domain.entity.Article;
 import com.revenat.iblog.application.domain.entity.Category;
 import com.revenat.iblog.application.domain.entity.Comment;
+import com.revenat.iblog.application.domain.form.CommentForm;
 import com.revenat.iblog.application.domain.model.Items;
 import com.revenat.iblog.application.domain.search.criteria.ArticleCriteria;
 import com.revenat.iblog.application.infra.util.Checks;
 import com.revenat.iblog.application.service.ArticleService;
+import com.revenat.iblog.application.service.AuthenticationService;
 import com.revenat.iblog.application.service.I18nService;
 import com.revenat.iblog.application.service.NotificationService;
 import com.revenat.iblog.persistence.repository.ArticleRepository;
@@ -29,15 +31,17 @@ class ArticleServiceImpl implements ArticleService {
 	private final CommentRepository commentRepo;
 	private final NotificationService notificationService;
 	private final I18nService i18nService;
+	private final AuthenticationService authService;
 
 	public ArticleServiceImpl(ArticleRepository articleRepo, CategoryRepository categoryRepo,
-			CommentRepository commentRepo, NotificationService notificationService,
-			I18nService i18nService) {
+			CommentRepository commentRepo, NotificationService notificationService, I18nService i18nService,
+			AuthenticationService authService) {
 		this.articleRepo = articleRepo;
 		this.categoryRepo = categoryRepo;
 		this.commentRepo = commentRepo;
 		this.notificationService = notificationService;
 		this.i18nService = i18nService;
+		this.authService = authService;
 	}
 
 	@Override
@@ -104,15 +108,16 @@ class ArticleServiceImpl implements ArticleService {
 		Checks.checkParam(pageSize >= 1, "page size can not be less that 1: %d", pageSize);
 		return commentRepo.getByArticle(articleId, offset, pageSize);
 	}
-
+	
 	@Override
-	public Comment addCommentToArticle(long articleId, String content, Account account, String articleUri, Locale locale) {
+	public Comment addCommentToArticle(CommentForm form, String articleUri) {
+		form.validate();
+		Account a = authService.authenticate(form.getAuthToken());
 		Comment c = new Comment();
-		c.setArticleId(articleId);
-		c.setContent(content);
-		c.setAccount(account);
+		c.setArticleId(form.getArticleId());
+		c.setContent(form.getContent());
+		c.setAccount(a);
 		c = commentRepo.save(c);
-		
 		/* No need to manually update article comments count because of the triggers on the
 		 * database which do such worh automatically when new comment has been added.
 		 *
@@ -121,7 +126,7 @@ class ArticleServiceImpl implements ArticleService {
 		 * articleRepo.update(a);
 		*/
 		
-		sendNewCommentNotification(articleRepo.getById(articleId), content, articleUri, locale);
+		sendNewCommentNotification(articleRepo.getById(form.getArticleId()), form.getContent(), articleUri, form.getLocale());
 		return c;
 	}
 

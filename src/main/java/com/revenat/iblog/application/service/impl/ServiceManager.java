@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.revenat.iblog.application.service.ArticleService;
 import com.revenat.iblog.application.service.AuthenticationService;
 import com.revenat.iblog.application.service.CategoryService;
+import com.revenat.iblog.application.service.ContactService;
 import com.revenat.iblog.application.service.I18nService;
 import com.revenat.iblog.application.service.NotificationService;
 import com.revenat.iblog.persistence.repository.CategoryRepository;
@@ -27,6 +28,7 @@ public class ServiceManager {
 	private final AuthenticationService authService;
 	private final I18nService i18nService;
 	private final NotificationService notificationService;
+	private final ContactService contactService;
 	
 	public CategoryService getCategoryService() {
 		return categoryService;
@@ -46,6 +48,10 @@ public class ServiceManager {
 	
 	public NotificationService getNotificationService() {
 		return notificationService;
+	}
+	
+	public ContactService getContactService() {
+		return contactService;
 	}
 	
 	public static synchronized ServiceManager getInstance(String applicationRootPath) {
@@ -88,15 +94,17 @@ public class ServiceManager {
 		categoryService = new CategoryServiceImpl(categoryRepository);
 		notificationService = new AsyncEmailNotificationService(buildEmailData());
 		i18nService = new ResourceBundleI18nService(getApplicationProperty("i18n.bundle"));
-		articleService = new ArticleServiceImpl(repoFactory.createArticleRepository(),
-												categoryRepository,
-												repoFactory.createCommentRepository(),
-												notificationService,
-												i18nService);
 		authService = new SocialAccountAuthenticationService(
 				new GooglePlusSocialService(getApplicationProperty("social.googleplus.clientId")),
 				new FileStorageAvatarService(applicationRootPath),
 				repoFactory.createAccountRepository());
+		articleService = new ArticleServiceImpl(repoFactory.createArticleRepository(),
+												categoryRepository,
+												repoFactory.createCommentRepository(),
+												notificationService,
+												i18nService,
+												authService);
+		contactService = new ContactServiceImpl(i18nService, notificationService);
 		
 		LOGGER.info("ServiceManager instance created");
 	}

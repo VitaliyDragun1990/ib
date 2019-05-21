@@ -12,7 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.revenat.iblog.presentation.form.AbstractForm;
+import com.revenat.iblog.application.domain.form.AbstractForm;
 import com.revenat.iblog.presentation.infra.util.RoutingUtils;
 
 public class AbstractController extends HttpServlet {
