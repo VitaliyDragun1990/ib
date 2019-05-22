@@ -20,18 +20,18 @@ import com.revenat.iblog.persistence.repository.CategoryRepository;
 import com.revenat.iblog.persistence.repository.CommentRepository;
 
 /**
- * This component contains logic related to {@link Article} entity.
+ * This component performs different operations on {@link Article} entity.
  * 
  * @author Vitaly Dragun
  *
  */
 class ArticleServiceImpl implements ArticleService {
-	private final ArticleRepository articleRepo;
+	protected final ArticleRepository articleRepo;
 	private final CategoryRepository categoryRepo;
 	private final CommentRepository commentRepo;
 	private final NotificationService notificationService;
 	private final I18nService i18nService;
-	private final AuthenticationService authService;
+	protected final AuthenticationService authService;
 
 	public ArticleServiceImpl(ArticleRepository articleRepo, CategoryRepository categoryRepo,
 			CommentRepository commentRepo, NotificationService notificationService, I18nService i18nService,
@@ -88,7 +88,7 @@ class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public Article findArticle(long articleId) {
+	public Article getArticle(long articleId) {
 		Article article = articleRepo.getById(articleId);
 		Checks.checkResource(article, "Article with id: %d not found", articleId);
 		return article;
@@ -108,7 +108,7 @@ class ArticleServiceImpl implements ArticleService {
 		Checks.checkParam(pageSize >= 1, "page size can not be less that 1: %d", pageSize);
 		return commentRepo.getByArticle(articleId, offset, pageSize);
 	}
-	
+
 	@Override
 	public Comment addCommentToArticle(CommentForm form, String articleUri) {
 		form.validate();
@@ -118,22 +118,26 @@ class ArticleServiceImpl implements ArticleService {
 		c.setContent(form.getContent());
 		c.setAccount(a);
 		c = commentRepo.save(c);
-		/* No need to manually update article comments count because of the triggers on the
-		 * database which do such worh automatically when new comment has been added.
+		/*
+		 * No need to manually update article comments count because of the triggers on
+		 * the database which do such worh automatically when new comment has been
+		 * added.
 		 *
 		 * Article a = articleRepo.getById(articleId);
 		 * a.setNumberOfComments((int)commentRepo.getCountByArticle(articleId));
 		 * articleRepo.update(a);
-		*/
-		
-		sendNewCommentNotification(articleRepo.getById(form.getArticleId()), form.getContent(), articleUri, form.getLocale());
+		 */
+
+		sendNewCommentNotification(articleRepo.getById(form.getArticleId()), form.getContent(), articleUri,
+				form.getLocale());
 		return c;
 	}
 
-	private void sendNewCommentNotification(Article article, String commentContent, String articleUri, Locale locale) {
+	protected void sendNewCommentNotification(Article article, String commentContent, String articleUri,
+			Locale locale) {
 		String title = i18nService.getMessage("notification.newComment.title", locale, article.getTitle());
-		String content = i18nService.getMessage("notification.newComment.content", locale, article.getTitle(), articleUri,
-				commentContent);
+		String content = i18nService.getMessage("notification.newComment.content", locale, article.getTitle(),
+				articleUri, commentContent);
 		notificationService.sendNotification(title, content);
 	}
 

@@ -13,6 +13,6 @@ public interface AuthenticationService {
 	 * @throws @{@link AuthenticationException} if error occurs during
 	 *         authentication process.
 	 */
-	Account authenticate(String authToken);
+	Account authenticate(String authToken) throws AuthenticationException;
 
 }

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.revenat.iblog.application.domain.form.AbstractForm;
+import com.revenat.iblog.application.infra.exception.flow.FlowException;
 import com.revenat.iblog.presentation.infra.util.RoutingUtils;
 
 public class AbstractController extends HttpServlet {
@@ -51,7 +52,7 @@ public class AbstractController extends HttpServlet {
 			BeanUtils.populate(form, req.getParameterMap());
 			return form;
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-			throw new ServletException(e);
+			throw new FlowException("Can not create form " + formClass + " for request: " + e.getMessage(), e);
 		}
 	}
 }

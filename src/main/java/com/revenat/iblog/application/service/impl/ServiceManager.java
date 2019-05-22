@@ -92,13 +92,13 @@ public class ServiceManager {
 		RepositoryFactory repoFactory = new RepositoryFactory(dataSource);
 		CategoryRepository categoryRepository = repoFactory.createCategoryRepository();
 		categoryService = new CategoryServiceImpl(categoryRepository);
-		notificationService = new AsyncEmailNotificationService(buildEmailData());
+		notificationService = new /*AsyncEmailNotificationService(buildEmailData())*/DummyNotificationService();
 		i18nService = new ResourceBundleI18nService(getApplicationProperty("i18n.bundle"));
 		authService = new SocialAccountAuthenticationService(
 				new GooglePlusSocialService(getApplicationProperty("social.googleplus.clientId")),
 				new FileStorageAvatarService(applicationRootPath),
 				repoFactory.createAccountRepository());
-		articleService = new ArticleServiceImpl(repoFactory.createArticleRepository(),
+		articleService = new /*ArticleServiceImpl*/DummyArticleService(repoFactory.createArticleRepository(),
 												categoryRepository,
 												repoFactory.createCommentRepository(),
 												notificationService,
@@ -109,6 +109,7 @@ public class ServiceManager {
 		LOGGER.info("ServiceManager instance created");
 	}
 	
+	@SuppressWarnings("unused")
 	private EmailData buildEmailData() {
 		return new EmailData(getApplicationProperty("email.notificationEmail"),
 							 getApplicationProperty("email.fromEmail"),

@@ -30,13 +30,13 @@ public class ArticleController extends AbstractController {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			processRequest(req, resp);
+			viewArticle(req, resp);
 		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 			throw new ResourceNotFoundException("There is no resource for such url: " + req.getRequestURI());
 		}
 	}
 
-	private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+	private void viewArticle(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String requestUri = req.getRequestURI();
 		Article article = findArticle(getArticleId(requestUri));
 		if (!getArticleUrl(requestUri).equals(article.getUrl())) {
@@ -52,7 +52,7 @@ public class ArticleController extends AbstractController {
 	}
 
 	private Article findArticle(String articleId) {
-		return articleService.findArticle(Long.parseLong(articleId));
+		return articleService.getArticle(Long.parseLong(articleId));
 	}
 
 	private String getArticleUrl(String requestUri) {

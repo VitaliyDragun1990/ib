@@ -12,6 +12,13 @@ import org.slf4j.LoggerFactory;
 import com.revenat.iblog.application.domain.model.AbstractModel;
 import com.revenat.iblog.application.service.NotificationService;
 
+/**
+ * This implementation of the {@link NotificationService} asynchronously sends
+ * email notifications.
+ * 
+ * @author Vitaly Dragun
+ *
+ */
 class AsyncEmailNotificationService implements NotificationService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AsyncEmailNotificationService.class);
 	private final ExecutorService executorService;
@@ -42,6 +49,7 @@ class AsyncEmailNotificationService implements NotificationService {
 			this.content = content;
 			this.tryAttempts = emailData.getTryAttempts();
 		}
+
 		private boolean isValidTry() {
 			return tryAttempts > 0;
 		}
@@ -51,20 +59,21 @@ class AsyncEmailNotificationService implements NotificationService {
 			try {
 				SimpleEmail email = new SimpleEmail();
 				email.setCharset("utf-8");
-				
+
 				email.setHostName(emailData.getSmtpServer());
 				email.setSmtpPort(Integer.parseInt(emailData.getSmtpPort()));
 				email.setSSLCheckServerIdentity(true);
 				email.setStartTLSEnabled(true);
-				
-				email.setAuthenticator(new DefaultAuthenticator(emailData.getSmtpUsername(), emailData.getSmtpPassword()));
+
+				email.setAuthenticator(
+						new DefaultAuthenticator(emailData.getSmtpUsername(), emailData.getSmtpPassword()));
 				email.setFrom(emailData.getFromEmail());
 				email.setSubject(subject);
 				email.setMsg(content);
-				email.addTo( emailData.getNotificationEmail());
+				email.addTo(emailData.getNotificationEmail());
 				email.send(); // TODO: commented for testing puprose
-				LOGGER.info("Email with subject '{}' and content '{}' has been sent to {}",
-						subject, content, emailData.getNotificationEmail());
+				LOGGER.info("Email with subject '{}' and content '{}' has been sent to {}", subject, content,
+						emailData.getNotificationEmail());
 			} catch (EmailException e) {
 				LOGGER.error("Can't send email: " + e.getMessage(), e);
 				tryAttempts--;
@@ -75,7 +84,7 @@ class AsyncEmailNotificationService implements NotificationService {
 					LOGGER.error("Email has not been sent: limit of try attempts");
 				}
 			} catch (Exception e) {
-				LOGGER.error("Error during sending email: {}",e.getMessage(), e);
+				LOGGER.error("Error during sending email: {}", e.getMessage(), e);
 			}
 		}
 	}

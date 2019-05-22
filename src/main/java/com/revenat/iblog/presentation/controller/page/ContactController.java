@@ -26,14 +26,19 @@ public class ContactController extends AbstractController {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Boolean isSuccess = (Boolean) req.getSession().getAttribute(Attribute.CONTACT_REQUEST_SUCCESS);
-		if (isSuccess == null) {
-			isSuccess = false;
-		} else {
-			req.getSession().removeAttribute(Attribute.CONTACT_REQUEST_SUCCESS);
-		}
-		req.setAttribute(Attribute.SUCCESS, isSuccess);
+		Boolean displayInfoMessage = shouldInfoMessageBeDisplayed(req);
+		req.setAttribute(Attribute.DISPLAY_INFO_MESSAGE, displayInfoMessage);
 		forwardToPage(Page.CONTACT, req, resp);
+	}
+
+	private Boolean shouldInfoMessageBeDisplayed(HttpServletRequest req) {
+		Boolean displayInfoMessage = (Boolean) req.getSession().getAttribute(Attribute.DISPLAY_INFO_MESSAGE);
+		if (displayInfoMessage == null) {
+			displayInfoMessage = false;
+		} else {
+			req.getSession().removeAttribute(Attribute.DISPLAY_INFO_MESSAGE);
+		}
+		return displayInfoMessage;
 	}
 	
 	@Override
@@ -41,7 +46,7 @@ public class ContactController extends AbstractController {
 		try {
 			ContactForm form = createForm(req, ContactForm.class);
 			contactService.createContactRequest(form);
-			req.getSession().setAttribute(Attribute.CONTACT_REQUEST_SUCCESS, Boolean.TRUE);
+			req.getSession().setAttribute(Attribute.DISPLAY_INFO_MESSAGE, Boolean.TRUE);
 			redirect(URL.CONTACT, resp);
 		} catch (InvalidParameterException e) {
 			throw new ValidationException("Validation should be done on client side: " + e.getMessage(), e);

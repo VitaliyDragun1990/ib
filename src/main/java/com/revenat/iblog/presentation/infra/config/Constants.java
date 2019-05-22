@@ -11,7 +11,6 @@ public final class Constants {
 		public static final String STATUS_CODE = "statusCode";
 		public static final String ERROR_MESSAGE = "errorMessage";
 		public static final String CATEGORY_MAP = "CATEGORY_MAP";
-//		public static final String SELECTED_CATEGORY_URL = "selectedCategoryUrl";
 		public static final String ARTICLES = "articles";
 		public static final String SEARCH_QUERY = "searchQuery";
 		public static final String ARTICLE_COUNT = "articleCount";
@@ -21,8 +20,7 @@ public final class Constants {
 		public static final String IS_NEWS_PAGE = "isNewsPage";
 		public static final String COMMENTS = "comments";
 		public static final String SOCIAL_GOOGLEPLUS_CLIENT_ID = "social_googleplus_clientId";
-		public static final String CONTACT_REQUEST_SUCCESS = "CONTACT_REQUEST_SUCCESS";
-		public static final String SUCCESS = "success";
+		public static final String DISPLAY_INFO_MESSAGE = "displayInfoMessage";
 		public static final String I18N = "I18N";
 		public static final String USER_LOCALE = "userLocale";
 

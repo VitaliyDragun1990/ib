@@ -17,8 +17,7 @@ class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Category findByUrl(String categoryUrl) {
-		Category category = categoryRepo.getByUrl(categoryUrl);
-		return category;
+		return categoryRepo.getByUrl(categoryUrl);
 	}
 
 	@Override

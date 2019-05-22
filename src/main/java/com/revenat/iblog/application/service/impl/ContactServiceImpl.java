@@ -6,7 +6,7 @@ import com.revenat.iblog.application.service.I18nService;
 import com.revenat.iblog.application.service.NotificationService;
 import com.revenat.iblog.presentation.infra.exception.InputValidationException;
 
-public class ContactServiceImpl implements ContactService {
+class ContactServiceImpl implements ContactService {
 	private final I18nService i18nService;
 	private final NotificationService notificationService;
 	

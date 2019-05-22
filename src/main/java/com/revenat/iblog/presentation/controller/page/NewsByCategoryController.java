@@ -38,7 +38,6 @@ public class NewsByCategoryController extends AbstractController {
 		Pagination pagination = new Pagination.Builder(requestUri+"?", page, articles.getCount()).build();
 		
 		req.setAttribute(Attribute.ARTICLES, articles.getItems());
-//		req.setAttribute(Attribute.SELECTED_CATEGORY_URL, categoryUrl);
 		req.setAttribute(Attribute.SELECTED_CATEGORY, categoryService.findByUrl(categoryUrl));
 		req.setAttribute(Attribute.PAGINATION, pagination);
 		

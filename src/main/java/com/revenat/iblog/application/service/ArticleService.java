@@ -56,13 +56,13 @@ public interface ArticleService {
 	Items<Article> listArticlesBySearchQuery(String searchQuery, String categoryUrl, int pageNumber, int pageSize);
 
 	/**
-	 * Finds {@link Article} using specified {@code articleId} parameter.
+	 * Gets {@link Article} using specified {@code articleId} parameter.
 	 * 
 	 * @param articleId if of the article to find.
 	 * @return article with such id.
 	 * @throws ResourceNotFoundException if no article with specified id was found.
 	 */
-	Article findArticle(long articleId);
+	Article getArticle(long articleId);
 
 	/**
 	 * Increments {@link Article#getNumberOfViews()} attribute by {@code 1} and

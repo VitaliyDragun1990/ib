@@ -10,7 +10,7 @@
 		<div class="row">
 			<div class="col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
 				<form id="contactForm" action='<c:url value="/contact" />' method="post">
-					<c:if test="${success}">
+					<c:if test="${displayInfoMessage}">
 						<div class="alert alert-success">
   							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <custom:message key="app.contact.successMessage"/>
 						</div>
