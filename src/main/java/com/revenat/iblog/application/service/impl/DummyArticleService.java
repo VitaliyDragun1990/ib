@@ -1,14 +1,16 @@
 package com.revenat.iblog.application.service.impl;
 
-import com.revenat.iblog.application.domain.entity.Account;
-import com.revenat.iblog.application.domain.entity.Comment;
-import com.revenat.iblog.application.domain.form.CommentForm;
+import com.revenat.iblog.application.dto.CommentDTO;
+import com.revenat.iblog.application.form.CommentForm;
+import com.revenat.iblog.application.service.AccountService;
+import com.revenat.iblog.application.service.ArticleService;
 import com.revenat.iblog.application.service.AuthenticationService;
-import com.revenat.iblog.application.service.I18nService;
-import com.revenat.iblog.application.service.NotificationService;
-import com.revenat.iblog.persistence.repository.ArticleRepository;
-import com.revenat.iblog.persistence.repository.CategoryRepository;
-import com.revenat.iblog.persistence.repository.CommentRepository;
+import com.revenat.iblog.application.service.FeedbackService;
+import com.revenat.iblog.application.transform.Transformer;
+import com.revenat.iblog.domain.entity.Comment;
+import com.revenat.iblog.infrastructure.repository.ArticleRepository;
+import com.revenat.iblog.infrastructure.repository.CategoryRepository;
+import com.revenat.iblog.infrastructure.repository.CommentRepository;
 
 /**
  * This is development-like implementations of the {@link ArticleService}
@@ -25,22 +27,21 @@ import com.revenat.iblog.persistence.repository.CommentRepository;
 class DummyArticleService extends ArticleServiceImpl {
 
 	public DummyArticleService(ArticleRepository articleRepo, CategoryRepository categoryRepo,
-			CommentRepository commentRepo, NotificationService notificationService, I18nService i18nService,
-			AuthenticationService authService) {
-		super(articleRepo, categoryRepo, commentRepo, notificationService, i18nService, authService);
+			CommentRepository commentRepo, AuthenticationService authService, AccountService accountService,
+			FeedbackService feedbackService, Transformer transformer) {
+		super(articleRepo, categoryRepo, commentRepo, authService, accountService, feedbackService, transformer);
 	}
 
 	@Override
-	public Comment addCommentToArticle(CommentForm form, String articleUri) {
+	public CommentDTO addCommentToArticle(CommentForm form) {
 		form.validate();
-		Account a = authService.authenticate(form.getAuthToken());
+		long accountId = authService.authenticate(form.getAuthToken());
 		Comment c = new Comment();
 		c.setArticleId(form.getArticleId());
 		c.setContent(form.getContent());
-		c.setAccount(a);
+		c.setAccountId(accountId);
 		
-		sendNewCommentNotification(articleRepo.getById(form.getArticleId()), form.getContent(), articleUri,
-				form.getLocale());
-		return c;
+		feedbackService.sendNewCommentNotification(form);
+		return transform(c, CommentDTO.class, (e, dto) -> dto.setAccount(accountService.getById(e.getAccountId())));
 	}
 }

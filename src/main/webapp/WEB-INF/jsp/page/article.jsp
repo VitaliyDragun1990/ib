@@ -11,14 +11,13 @@
 
 <article class="panel panel-default">
 	<c:set var="category" value="${CATEGORY_MAP[article.categoryId]}" />
-	<c:set var="articleLink" value="/article/${article.id}${article.url}" />
 	
 	<div class="thumbnail">
-		<a href='<c:url value="${articleLink}" />'><img src="${article.logo}" alt="${article.title}"></a>
+		<a href='<c:url value="${article.articleLink}" />'><img src="${article.logo}" alt="${article.title}"></a>
 	</div>
 	<div class="panel-body">
 		<h3>
-			<a href='<c:url value="${articleLink}" />'>${article.title}</a>
+			<a href='<c:url value="${article.articleLink}" />'>${article.title}</a>
 		</h3>
 		<ul class="nav navbar-nav">
 			<li><a href='<c:url value="/news${category.url}" />'>
@@ -54,7 +53,7 @@
 		
 		<!-- User comments section  -->
 		<div class="comments">
-			<div id="comments-container" data-comments-count="${article.numberOfComments}" data-article-id="${article.id}">
+			<div id="comments-container" data-comments-count="${article.numberOfComments}" data-article-id="${article.id}" data-article-title="${article.title}">
 				<jsp:include page="../fragment/comments.jsp"/>		
 			</div>
 			

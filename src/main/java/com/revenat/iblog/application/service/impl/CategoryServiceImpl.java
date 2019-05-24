@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.revenat.iblog.application.domain.entity.Category;
 import com.revenat.iblog.application.service.CategoryService;
-import com.revenat.iblog.persistence.repository.CategoryRepository;
+import com.revenat.iblog.domain.entity.Category;
+import com.revenat.iblog.infrastructure.repository.CategoryRepository;
 
 class CategoryServiceImpl implements CategoryService {
 	private final CategoryRepository categoryRepo;

@@ -2,12 +2,14 @@ package com.revenat.iblog.application.service;
 
 import java.util.List;
 
-import com.revenat.iblog.application.domain.entity.Article;
-import com.revenat.iblog.application.domain.entity.Category;
-import com.revenat.iblog.application.domain.entity.Comment;
-import com.revenat.iblog.application.domain.form.CommentForm;
-import com.revenat.iblog.application.domain.model.Items;
-import com.revenat.iblog.application.infra.exception.ResourceNotFoundException;
+import com.revenat.iblog.application.dto.ArticleDTO;
+import com.revenat.iblog.application.dto.CommentDTO;
+import com.revenat.iblog.application.form.CommentForm;
+import com.revenat.iblog.application.model.Items;
+import com.revenat.iblog.domain.entity.Article;
+import com.revenat.iblog.domain.entity.Category;
+import com.revenat.iblog.domain.entity.Comment;
+import com.revenat.iblog.infrastructure.exception.ResourceNotFoundException;
 
 public interface ArticleService {
 
@@ -19,7 +21,7 @@ public interface ArticleService {
 	 * @return {@link Items} with articles for given page or empty one if no
 	 *         articles were found.
 	 */
-	Items<Article> listArticles(int pageNumber, int pageSize);
+	Items<ArticleDTO> listArticles(int pageNumber, int pageSize);
 
 	/**
 	 * Returns {@link Items} object with {@link Article} instances wich belong to
@@ -35,7 +37,7 @@ public interface ArticleService {
 	 *                                   {@code categoryUrl} parameter does not
 	 *                                   exist.
 	 */
-	Items<Article> listArticlesByCategory(String categoryUrl, int pageNumber, int pageSize);
+	Items<ArticleDTO> listArticlesByCategory(String categoryUrl, int pageNumber, int pageSize);
 
 	/**
 	 * Returns {@link Items} object with {@link Article} instances wich belong to
@@ -53,7 +55,7 @@ public interface ArticleService {
 	 * @throws ResourceNotFoundException if {@code categoryUrl} is not {@code null}
 	 *                                   and category denoted by it does not exist.
 	 */
-	Items<Article> listArticlesBySearchQuery(String searchQuery, String categoryUrl, int pageNumber, int pageSize);
+	Items<ArticleDTO> listArticlesBySearchQuery(String searchQuery, String categoryUrl, int pageNumber, int pageSize);
 
 	/**
 	 * Gets {@link Article} using specified {@code articleId} parameter.
@@ -62,7 +64,7 @@ public interface ArticleService {
 	 * @return article with such id.
 	 * @throws ResourceNotFoundException if no article with specified id was found.
 	 */
-	Article getArticle(long articleId);
+	ArticleDTO getArticle(long articleId);
 
 	/**
 	 * Increments {@link Article#getNumberOfViews()} attribute by {@code 1} and
@@ -70,7 +72,7 @@ public interface ArticleService {
 	 * 
 	 * @return article with incremented view count
 	 */
-	Article incrementArticleViewCount(long articleId);
+	ArticleDTO incrementArticleViewCount(long articleId);
 
 	/**
 	 * Loads more {@link Comment}s for {@link Article} denoted by specified
@@ -82,7 +84,7 @@ public interface ArticleService {
 	 * @return list with comments for specified article, or empty one if no comments
 	 *         were found.
 	 */
-	List<Comment> loadCommentsForArticle(long articleId, int offset, int pageSize);
+	List<CommentDTO> loadCommentsForArticle(long articleId, int offset, int pageSize);
 
 	/**
 	 * Adds new comment for particular article.
@@ -90,6 +92,6 @@ public interface ArticleService {
 	 * @param form contains information about comment to be created
 	 * @return newly created comment
 	 */
-	Comment addCommentToArticle(CommentForm form, String articleUri);
+	CommentDTO addCommentToArticle(CommentForm form);
 
 }

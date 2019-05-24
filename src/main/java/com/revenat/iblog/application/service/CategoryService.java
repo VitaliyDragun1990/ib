@@ -2,7 +2,7 @@ package com.revenat.iblog.application.service;
 
 import java.util.Map;
 
-import com.revenat.iblog.application.domain.entity.Category;
+import com.revenat.iblog.domain.entity.Category;
 
 public interface CategoryService {
 

@@ -5,16 +5,15 @@
 
 <c:forEach var="article" items="${articles}">
 	<c:set var="category" value="${CATEGORY_MAP[article.categoryId]}" />
-	<c:set var="articleLink" value="/article/${article.id}${article.url}" />
 
 	<article class="panel panel-default">
 		<div class="thumbnail">
-			<a href='<c:url value="${articleLink}" />'> <img src="${article.logo}" alt="${article.title}">
+			<a href='<c:url value="${article.articleLink}" />'> <img src="${article.logo}" alt="${article.title}">
 			</a>
 		</div>
 		<div class="panel-body">
 			<h3>
-				<a href='<c:url value="${articleLink}" />'><custom:trim limit="40" text="${article.title}" /></a>
+				<a href='<c:url value="${article.articleLink}" />'><custom:trim limit="40" text="${article.title}" /></a>
 			</h3>
 			<ul class="nav navbar-nav">
 				<li><a href='<c:url value="/news${category.url}" />'><i class="fa fa-folder" aria-hidden="true"></i>

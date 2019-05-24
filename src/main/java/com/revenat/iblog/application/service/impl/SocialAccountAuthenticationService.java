@@ -2,15 +2,15 @@ package com.revenat.iblog.application.service.impl;
 
 import java.io.IOException;
 
-import com.revenat.iblog.application.domain.entity.Account;
-import com.revenat.iblog.application.domain.model.SocialAccount;
-import com.revenat.iblog.application.infra.exception.AuthenticationException;
-import com.revenat.iblog.application.infra.exception.PersistenceException;
-import com.revenat.iblog.application.infra.exception.flow.FlowException;
 import com.revenat.iblog.application.service.AuthenticationService;
-import com.revenat.iblog.application.service.AvatarService;
-import com.revenat.iblog.application.service.SocialService;
-import com.revenat.iblog.persistence.repository.AccountRepository;
+import com.revenat.iblog.domain.entity.Account;
+import com.revenat.iblog.infrastructure.exception.AuthenticationException;
+import com.revenat.iblog.infrastructure.exception.PersistenceException;
+import com.revenat.iblog.infrastructure.exception.flow.FlowException;
+import com.revenat.iblog.infrastructure.repository.AccountRepository;
+import com.revenat.iblog.infrastructure.service.AvatarService;
+import com.revenat.iblog.infrastructure.service.SocialAccount;
+import com.revenat.iblog.infrastructure.service.SocialService;
 
 class SocialAccountAuthenticationService implements AuthenticationService {
 	private final SocialService socialService;
@@ -24,13 +24,13 @@ class SocialAccountAuthenticationService implements AuthenticationService {
 	}
 
 	@Override
-	public Account authenticate(String authToken) throws AuthenticationException {
+	public long authenticate(String authToken) throws AuthenticationException {
 		SocialAccount socialAccount = socialService.getSocialAccount(authToken);
 		Account account = accountRepo.getByEmail(socialAccount.getEmail());
 		if (account == null) {
 			account = createNewAccount(socialAccount);
 		}
-		return account;
+		return account.getId();
 	}
 
 	private Account createNewAccount(SocialAccount socialAccount) {

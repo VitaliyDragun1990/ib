@@ -6,7 +6,7 @@
 
 	<tag>
 		<name>trim</name>
-		<tag-class>com.revenat.iblog.presentation.tag.TrimmerTag</tag-class>
+		<tag-class>com.revenat.iblog.ui.tag.TrimmerTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>limit</name>
@@ -24,7 +24,7 @@
 	
 	<tag>
 		<name>encoder</name>
-		<tag-class>com.revenat.iblog.presentation.tag.UrlEncoderTag
+		<tag-class>com.revenat.iblog.ui.tag.UrlEncoderTag
 		</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
@@ -37,7 +37,7 @@
 	
 	<tag>
 		<name>message</name>
-		<tag-class>com.revenat.iblog.presentation.tag.MessageLocalizationTag</tag-class>
+		<tag-class>com.revenat.iblog.ui.tag.MessageLocalizationTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>key</name>

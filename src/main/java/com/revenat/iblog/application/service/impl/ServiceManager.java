@@ -7,14 +7,20 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.revenat.iblog.application.service.AccountService;
 import com.revenat.iblog.application.service.ArticleService;
 import com.revenat.iblog.application.service.AuthenticationService;
 import com.revenat.iblog.application.service.CategoryService;
-import com.revenat.iblog.application.service.ContactService;
+import com.revenat.iblog.application.service.FeedbackService;
 import com.revenat.iblog.application.service.I18nService;
-import com.revenat.iblog.application.service.NotificationService;
-import com.revenat.iblog.persistence.repository.CategoryRepository;
-import com.revenat.iblog.persistence.repository.RepositoryFactory;
+import com.revenat.iblog.application.transform.Transformer;
+import com.revenat.iblog.application.transform.impl.FieldProvider;
+import com.revenat.iblog.application.transform.impl.SimpleDTOTransformer;
+import com.revenat.iblog.infrastructure.repository.AccountRepository;
+import com.revenat.iblog.infrastructure.repository.CategoryRepository;
+import com.revenat.iblog.infrastructure.repository.RepositoryFactory;
+import com.revenat.iblog.infrastructure.service.NotificationService;
+import com.revenat.iblog.infrastructure.service.impl.ServiceFactory;
 
 public class ServiceManager {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServiceManager.class);
@@ -28,7 +34,7 @@ public class ServiceManager {
 	private final AuthenticationService authService;
 	private final I18nService i18nService;
 	private final NotificationService notificationService;
-	private final ContactService contactService;
+	private FeedbackService feedbackService;
 	
 	public CategoryService getCategoryService() {
 		return categoryService;
@@ -46,12 +52,8 @@ public class ServiceManager {
 		return i18nService;
 	}
 	
-	public NotificationService getNotificationService() {
-		return notificationService;
-	}
-	
-	public ContactService getContactService() {
-		return contactService;
+	public FeedbackService getFeedbackService() {
+		return feedbackService;
 	}
 	
 	public static synchronized ServiceManager getInstance(String applicationRootPath) {
@@ -91,33 +93,38 @@ public class ServiceManager {
 				getApplicationProperty("db.pool.maxSize"));
 		RepositoryFactory repoFactory = new RepositoryFactory(dataSource);
 		CategoryRepository categoryRepository = repoFactory.createCategoryRepository();
+		Transformer transformer = new SimpleDTOTransformer(new FieldProvider());
 		categoryService = new CategoryServiceImpl(categoryRepository);
-		notificationService = new /*AsyncEmailNotificationService(buildEmailData())*/DummyNotificationService();
+		notificationService = ServiceFactory.createNotificationService(getEmailProperties());
 		i18nService = new ResourceBundleI18nService(getApplicationProperty("i18n.bundle"));
+		feedbackService = new FeedbackServiceImpl(i18nService, notificationService);
+		AccountRepository accountRepo = repoFactory.createAccountRepository();
 		authService = new SocialAccountAuthenticationService(
-				new GooglePlusSocialService(getApplicationProperty("social.googleplus.clientId")),
-				new FileStorageAvatarService(applicationRootPath),
-				repoFactory.createAccountRepository());
+				ServiceFactory.createSocialService(getApplicationProperty("social.googleplus.clientId")),
+				ServiceFactory.createAvatarService(applicationRootPath),
+				accountRepo);
+		AccountService accountService = new AccountServiceImpl(accountRepo, transformer);
 		articleService = new /*ArticleServiceImpl*/DummyArticleService(repoFactory.createArticleRepository(),
 												categoryRepository,
 												repoFactory.createCommentRepository(),
-												notificationService,
-												i18nService,
-												authService);
-		contactService = new ContactServiceImpl(i18nService, notificationService);
+												authService,
+												accountService,
+												feedbackService,
+												transformer);
 		
 		LOGGER.info("ServiceManager instance created");
 	}
-	
-	@SuppressWarnings("unused")
-	private EmailData buildEmailData() {
-		return new EmailData(getApplicationProperty("email.notificationEmail"),
-							 getApplicationProperty("email.fromEmail"),
-							 Integer.parseInt(getApplicationProperty("email.sendTryAttempts")),
-							 getApplicationProperty("email.smtp.server"),
-							 getApplicationProperty("email.smtp.port"),
-							 getApplicationProperty("email.smtp.username"),
-							 getApplicationProperty("email.smtp.password"));
+
+	private Properties getEmailProperties() {
+		Properties emailProps = new Properties();
+		emailProps.setProperty("email.notificationEmail", getApplicationProperty("email.notificationEmail"));
+		emailProps.setProperty("email.fromEmail", getApplicationProperty("email.fromEmail"));
+		emailProps.setProperty("email.sendTryAttempts", getApplicationProperty("email.sendTryAttempts"));
+		emailProps.setProperty("email.smtp.server", getApplicationProperty("email.smtp.server"));
+		emailProps.setProperty("email.smtp.port", getApplicationProperty("email.smtp.port"));
+		emailProps.setProperty("email.smtp.username", getApplicationProperty("email.smtp.username"));
+		emailProps.setProperty("email.smtp.password", getApplicationProperty("email.smtp.password"));
+		return emailProps;
 	}
 
 	private Properties loadApplicationProperties() {

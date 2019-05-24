@@ -129,6 +129,8 @@ $(function() {
 			var authToken = googleProfile.authToken;
 			var articleId = $('#comments-container').attr('data-article-id');
 			var content = $('.new-comment #commentText').val();
+			var articleUrl = window.location.href;
+			var articleTitle = $('#comments-container').attr('data-article-title');
 			if (content.trim() != '') {
 				$('#commentForm .help-block').addClass('hidden');
 				$('#commentForm').removeClass('has-error');
@@ -141,7 +143,9 @@ $(function() {
 					data: {
 						articleId : articleId,
 						authToken : authToken,
-						content : content
+						content : content,
+						articleUrl : articleUrl,
+						articleTitle : articleTitle
 					}, 
 					success : function(data) {
 						$('#comments-container').prepend(data);
